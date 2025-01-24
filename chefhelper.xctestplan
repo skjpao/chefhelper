@@ -1,0 +1,35 @@
+{
+  "configurations" : [
+    {
+      "id" : "B5E89B8B-1234-5678-9ABC-DEF012345678",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:chefhelper.xcodeproj",
+      "identifier" : "84D69A052B96A6B400C5F3CC",
+      "name" : "chefhelper"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:chefhelper.xcodeproj",
+        "identifier" : "84D69A152B96A6B500C5F3CC",
+        "name" : "chefhelperTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:chefhelper.xcodeproj",
+        "identifier" : "84D69A1F2B96A6B500C5F3CC",
+        "name" : "chefhelperUITests"
+      }
+    }
+  ],
+  "version" : 1
+} 
