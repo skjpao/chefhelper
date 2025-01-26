@@ -15,35 +15,34 @@ struct AddInventoryItemView: View {
     @State private var pricePerUnit = ""
     
     var body: some View {
-        NavigationView {
-            Form {
-                Section(header: Text("Tuotteen tiedot")) {
-                    TextField("Nimi", text: $name)
-                    
-                    HStack {
-                        TextField("Määrä", text: $amount)
-                            .keyboardType(.decimalPad)
-                        
-                        Picker("Yksikkö", selection: $selectedUnit) {
-                            ForEach(InventoryUnit.allCases, id: \.self) { unit in
-                                Text(unit.rawValue).tag(unit)
-                            }
-                        }
-                        .pickerStyle(SegmentedPickerStyle())
-                    }
-                    
-                    TextField("Hinta/\(selectedUnit.rawValue)", text: $pricePerUnit)
+        Form {
+            Section(header: Text("Tuotteen tiedot")) {
+                TextField("Nimi", text: $name)
+                
+                HStack {
+                    TextField("Määrä", text: $amount)
                         .keyboardType(.decimalPad)
-
-                    Picker("Kategoria", selection: $selectedCategory) {
-                        ForEach(Category.addCases, id: \.self) { category in
-                            Text(category.rawValue).tag(category)
+                    
+                    Picker("Yksikkö", selection: $selectedUnit) {
+                        ForEach(InventoryUnit.allCases, id: \.self) { unit in
+                            Text(unit.rawValue).tag(unit)
                         }
                     }
+                    .pickerStyle(.segmented)
                 }
                 
-                Section(header: Text("Päivämäärät")) {
-                    
+                TextField("Hinta/\(selectedUnit.rawValue)", text: $pricePerUnit)
+                    .keyboardType(.decimalPad)
+
+                Picker("Kategoria", selection: $selectedCategory) {
+                    ForEach(Category.addCases, id: \.self) { category in
+                        Text(category.rawValue).tag(category)
+                    }
+                }
+            }
+            
+            Section(header: Text("Päivämäärät")) {
+                if selectedCategory == .fresh {
                     Toggle("Viimeinen käyttöpäivä", isOn: Binding(
                         get: { expiryDate != nil },
                         set: { if !$0 { expiryDate = nil } else { expiryDate = Date() } }
@@ -61,29 +60,29 @@ struct AddInventoryItemView: View {
                     }
                 }
             }
-            .navigationTitle("Lisää tuote")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Peruuta") {
-                        dismiss()
-                    }
-                }
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Lisää") {
-                        addItem()
-                    }
+        }
+        .navigationTitle("Lisää tuote")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Peruuta") {
+                    dismiss()
                 }
             }
-            .alert("Virhe", isPresented: $showingAlert) {
-                Button("OK", role: .cancel) { }
-            } message: {
-                Text(alertMessage)
+            ToolbarItem(placement: .confirmationAction) {
+                Button("Tallenna") {
+                    saveItem()
+                }
             }
+        }
+        .alert("Virhe", isPresented: $showingAlert) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text(alertMessage)
         }
     }
     
-    private func addItem() {
+    private func saveItem() {
         guard !name.isEmpty else {
             alertMessage = "Syötä tuotteen nimi"
             showingAlert = true
