@@ -18,14 +18,14 @@ struct ContentView: View {
     
     var body: some View {
         TabView {
-            InventoryView()
-                .tabItem {
-                    Label("Varasto", systemImage: "cabinet")
-                }
-            
             RecipeListView()
                 .tabItem {
                     Label("Reseptit", systemImage: "book")
+                }
+            
+            InventoryView()
+                .tabItem {
+                    Label("Varasto", systemImage: "cube.box")
                 }
             
             StaffView()

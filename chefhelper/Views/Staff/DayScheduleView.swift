@@ -125,4 +125,3 @@ struct DayScheduleView: View {
         return combined
     }
 }
-

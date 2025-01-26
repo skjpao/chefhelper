@@ -4,13 +4,13 @@ import SwiftData
 struct StaffView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Staff.name) private var staff: [Staff]
+    @State private var selectedTab = 0
+    @State private var selectedWeek = Date()
     @State private var showingAddStaff = false
     @State private var selectedStaff: Staff?
-    @State private var selectedWeek = Date()
-    @State private var selectedTab = 0
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 0) {
                 // Tab selection
                 Picker("Näkymä", selection: $selectedTab) {

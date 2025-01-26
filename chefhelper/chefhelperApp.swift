@@ -10,10 +10,12 @@ struct chefhelperApp: App {
             let config = ModelConfiguration(isStoredInMemoryOnly: true)
             container = try ModelContainer(
                 for: Recipe.self,
-                    Ingredient.self,
-                    InventoryItem.self,
-                    Staff.self,
-                    WorkShift.self,
+                RecipeIngredient.self,
+                Dish.self,
+                DishComponent.self,
+                InventoryItem.self,
+                Staff.self,
+                WorkShift.self,
                 configurations: config
             )
         } catch {

@@ -7,12 +7,12 @@ struct AddInventoryItemView: View {
     
     @State private var name = ""
     @State private var amount = ""
-    @State private var selectedUnit: Unit = .kg
+    @State private var selectedUnit: InventoryUnit = .kg
     @State private var selectedCategory: Category = .fresh
-    @State private var arrivalDate = Date()
     @State private var expiryDate: Date? = nil
     @State private var showingAlert = false
     @State private var alertMessage = ""
+    @State private var pricePerUnit = ""
     
     var body: some View {
         NavigationView {
@@ -25,12 +25,15 @@ struct AddInventoryItemView: View {
                             .keyboardType(.decimalPad)
                         
                         Picker("Yksikkö", selection: $selectedUnit) {
-                            ForEach([Unit.kg, .l, .pieces], id: \.self) { unit in
+                            ForEach(InventoryUnit.allCases, id: \.self) { unit in
                                 Text(unit.rawValue).tag(unit)
                             }
                         }
                         .pickerStyle(SegmentedPickerStyle())
                     }
+                    
+                    TextField("Hinta/\(selectedUnit.rawValue)", text: $pricePerUnit)
+                        .keyboardType(.decimalPad)
 
                     Picker("Kategoria", selection: $selectedCategory) {
                         ForEach(Category.addCases, id: \.self) { category in
@@ -40,28 +43,21 @@ struct AddInventoryItemView: View {
                 }
                 
                 Section(header: Text("Päivämäärät")) {
-                    DatePicker(
-                        "Saapumispäivä",
-                        selection: $arrivalDate,
-                        displayedComponents: .date
-                    )
                     
-                    if selectedCategory == .fresh {
-                        Toggle("Viimeinen käyttöpäivä", isOn: Binding(
-                            get: { expiryDate != nil },
-                            set: { if !$0 { expiryDate = nil } else { expiryDate = Date() } }
-                        ))
-                        
-                        if expiryDate != nil {
-                            DatePicker(
-                                "Viimeinen käyttöpäivä",
-                                selection: Binding(
-                                    get: { expiryDate ?? Date() },
-                                    set: { expiryDate = $0 }
-                                ),
-                                displayedComponents: .date
-                            )
-                        }
+                    Toggle("Viimeinen käyttöpäivä", isOn: Binding(
+                        get: { expiryDate != nil },
+                        set: { if !$0 { expiryDate = nil } else { expiryDate = Date() } }
+                    ))
+                    
+                    if expiryDate != nil {
+                        DatePicker(
+                            "Viimeinen käyttöpäivä",
+                            selection: Binding(
+                                get: { expiryDate ?? Date() },
+                                set: { expiryDate = $0 }
+                            ),
+                            displayedComponents: .date
+                        )
                     }
                 }
             }
@@ -100,13 +96,19 @@ struct AddInventoryItemView: View {
             return
         }
         
+        guard let priceValue = Double(pricePerUnit.replacingOccurrences(of: ",", with: ".")) else {
+            alertMessage = "Syötä hinta numeroina"
+            showingAlert = true
+            return
+        }
+        
         let item = InventoryItem(
             name: name,
             amount: amountValue,
             unit: selectedUnit,
             category: selectedCategory,
-            arrivalDate: arrivalDate,
-            expiryDate: selectedCategory == .fresh ? expiryDate : nil
+            pricePerUnit: priceValue,
+            expirationDate: expiryDate
         )
         
         // Add debug print to verify item creation

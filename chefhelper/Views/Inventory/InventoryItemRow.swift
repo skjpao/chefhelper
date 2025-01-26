@@ -3,7 +3,7 @@ import SwiftData
 
 struct InventoryItemRow: View {
     @Bindable var item: InventoryItem
-    let showExpiryDate: Bool
+    @Binding var itemToEdit: InventoryItem?
     
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -13,31 +13,30 @@ struct InventoryItemRow: View {
     
     var body: some View {
         HStack(spacing: 8) {
-            Text(item.name)
-                .font(.system(.body, design: .rounded))
-                .foregroundColor(.brown)
-                .frame(maxWidth: .infinity, alignment: .leading)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(item.name)
+                    .font(.system(.body, design: .rounded))
+                    .foregroundColor(.brown)
+                    .lineLimit(1)
+                    .truncationMode(.tail)
+                Text(String(format: "%.2f €/%@", item.pricePerUnit, item.unit.rawValue))
+                    .font(.caption)
+                    .foregroundColor(.gray)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
             
-            Text(dateFormatter.string(from: item.arrivalDate))
-                .font(.system(.subheadline, design: .rounded))
-                .foregroundColor(.gray)
-                .frame(width: 80)
-            
-            // Näytä VKP vain jos showExpiryDate on true ja tuote on tuoretuote
-            if showExpiryDate && item.category == .fresh {
-                if let expiryDate = item.expiryDate {
-                    Text(dateFormatter.string(from: expiryDate))
-                        .font(.system(.subheadline, design: .rounded))
-                        .foregroundColor(isExpiringSoon(date: expiryDate) ? .red : .gray)
-                        .frame(width: 80)
-                } else {
-                    Text("-")
-                        .frame(width: 80)
-                        .foregroundColor(.gray)
-                }
+            if let expirationDate = item.expirationDate {
+                Text(dateFormatter.string(from: expirationDate))
+                    .font(.system(.subheadline, design: .rounded))
+                    .foregroundColor(item.isNearExpiration ? .red : .gray)
+                    .frame(width: 80)
+            } else {
+                Text("-")
+                    .foregroundColor(.gray)
+                    .frame(width: 80)
             }
             
-            HStack(spacing: 4) {
+            HStack(spacing: 2) {
                 TextField(
                     "Määrä",
                     value: $item.amount,
@@ -53,11 +52,11 @@ struct InventoryItemRow: View {
                     .frame(width: 30)
             }
         }
+        .padding(.horizontal)
         .padding(.vertical, 4)
+        .contentShape(Rectangle())
+        .onTapGesture {
+            itemToEdit = item
+        }
     }
-    
-    private func isExpiringSoon(date: Date) -> Bool {
-        let threeDays: TimeInterval = 3 * 24 * 60 * 60
-        return date.timeIntervalSinceNow < threeDays
-    }
-} 
+}

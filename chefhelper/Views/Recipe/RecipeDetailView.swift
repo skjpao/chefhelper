@@ -21,10 +21,17 @@ struct RecipeDetailView: View {
                         
                         Text("Ainesosat:")
                             .font(.headline)
-                        ForEach(recipe.ingredients) { ingredient in
-                            Text("• \(ingredient.name): \(String(format: "%.1f", ingredient.amount))g")
+                        Section(header: Text("Ainesosat")) {
+                            let ingredients = recipe.ingredients
+                            ForEach(ingredients) { ingredient in
+                                HStack {
+                                    Text(ingredient.name)
+                                    Spacer()
+                                    Text("\(formatAmount(ingredient.amount)) \(ingredient.unit)")
+                                        .foregroundColor(.gray)
+                                }
+                            }
                         }
-                        .padding(.leading)
                         
                         Text("Ohjeet:")
                             .font(.headline)
@@ -42,8 +49,9 @@ struct RecipeDetailView: View {
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                         
                         if let factor = Double(scalingFactor), factor > 0 {
-                            ForEach(recipe.ingredients) { ingredient in
-                                Text("• \(ingredient.name): \(String(format: "%.1f", ingredient.amount * factor))g")
+                            let scaledIngredients = recipe.ingredients
+                            ForEach(scaledIngredients) { ingredient in
+                                Text("• \(ingredient.name): \(String(format: "%.1f", ingredient.amount * factor))\(ingredient.unit)")
                             }
                             .padding(.leading)
                         }
@@ -120,5 +128,9 @@ struct RecipeDetailView: View {
     
     private func deleteRecipe() {
         modelContext.delete(recipe)
+    }
+    
+    private func formatAmount(_ amount: Double) -> String {
+        return String(format: "%.1f", amount)
     }
 } 

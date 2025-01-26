@@ -5,13 +5,17 @@ import SwiftData
 class Ingredient {
     var name: String
     var amount: Double
-    var unit: Unit 
-    var category: Category
+    var unit: String
     
-    init(name: String, amount: Double, unit: Unit = .kg, category: Category = .misc) {
+    init(name: String, amount: Double, unit: String) {
         self.name = name
         self.amount = amount
         self.unit = unit
-        self.category = category
     }
-} 
+}
+
+enum IngredientUnit: String, Codable, CaseIterable {
+    case kg = "kg"
+    case l = "l"
+    case kpl = "kpl"
+}
