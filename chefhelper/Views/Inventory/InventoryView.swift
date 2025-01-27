@@ -14,9 +14,26 @@ struct InventoryView: View {
         return items.filter { $0.category == selectedCategory }
     }
     
+    var totalValue: Double {
+        items.reduce(0) { $0 + $1.totalValue }
+    }
+    
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
+                // Varaston kokonaisarvo
+                GroupBox {
+                    HStack {
+                        Text("Varaston arvo:")
+                            .font(.headline)
+                        Spacer()
+                        Text(String(format: "%.2f €", totalValue))
+                            .font(.headline)
+                            .foregroundColor(.brown)
+                    }
+                }
+                .padding()
+                
                 // Kategoria-valitsin
                 Picker("Kategoria", selection: $selectedCategory) {
                     ForEach(Category.allCases, id: \.self) { category in
@@ -36,23 +53,7 @@ struct InventoryView: View {
                     } else {
                         ForEach(filteredItems) { item in
                             NavigationLink(destination: EditInventoryItemView(item: item)) {
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text(item.name)
-                                        .font(.system(.headline, design: .rounded))
-                                    
-                                    HStack {
-                                        Text("\(String(format: "%.1f", item.amount)) \(item.unit.rawValue)")
-                                            .font(.system(.subheadline, design: .rounded))
-                                            .foregroundColor(.gray)
-                                        
-                                        if let days = item.daysUntilExpiration {
-                                            Text("• \(days) päivää")
-                                                .font(.system(.subheadline, design: .rounded))
-                                                .foregroundColor(item.isNearExpiration ? .orange : .gray)
-                                        }
-                                    }
-                                }
-                                .padding(.vertical, 4)
+                                InventoryItemRow(item: item)
                             }
                         }
                         .onDelete(perform: deleteItems)
