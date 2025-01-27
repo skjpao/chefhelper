@@ -4,14 +4,59 @@ import AVFoundation
 struct CameraView: View {
     @Environment(\.dismiss) private var dismiss
     @Binding var imageData: Data?
+    @State private var showingAlert = false
+    @State private var alertMessage = ""
+    @State private var isCameraAuthorized = false
     
     var body: some View {
-        ImagePicker(imageData: $imageData, sourceType: .camera)
-            .ignoresSafeArea()
-            .onAppear {
-                // Pyydä kameran käyttöoikeus
-                AVCaptureDevice.requestAccess(for: .video) { _ in }
+        Group {
+            if isCameraAuthorized {
+                ImagePicker(imageData: $imageData, sourceType: .camera)
+                    .ignoresSafeArea()
+            } else {
+                ProgressView()
             }
+        }
+        .task {
+            await checkCameraPermission()
+        }
+        .alert("Kameran käyttöoikeus", isPresented: $showingAlert) {
+            Button("Avaa asetukset") {
+                if let url = URL(string: UIApplication.openSettingsURLString) {
+                    UIApplication.shared.open(url)
+                }
+                dismiss()
+            }
+            Button("Peruuta", role: .cancel) {
+                dismiss()
+            }
+        } message: {
+            Text(alertMessage)
+        }
+    }
+    
+    @MainActor
+    private func checkCameraPermission() async {
+        let status = AVCaptureDevice.authorizationStatus(for: .video)
+        
+        switch status {
+        case .authorized:
+            isCameraAuthorized = true
+        case .notDetermined:
+            let granted = await AVCaptureDevice.requestAccess(for: .video)
+            if granted {
+                isCameraAuthorized = true
+            } else {
+                alertMessage = "Tarvitsemme kameran käyttöoikeuden kuvien ottamiseen"
+                showingAlert = true
+            }
+        case .denied, .restricted:
+            alertMessage = "Kameran käyttöoikeus on estetty. Voit muuttaa asetusta puhelimen asetuksista."
+            showingAlert = true
+        @unknown default:
+            alertMessage = "Kameran käyttöoikeutta ei voitu tarkistaa"
+            showingAlert = true
+        }
     }
 }
 

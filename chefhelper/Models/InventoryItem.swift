@@ -19,7 +19,28 @@ class InventoryItem {
     
     var daysUntilExpiration: Int? {
         guard let expirationDate = expirationDate else { return nil }
-        return Calendar.current.dateComponents([.day], from: Date(), to: expirationDate).day
+        let calendar = Calendar.current
+        
+        let startOfToday = calendar.startOfDay(for: Date())
+        let startOfExpiration = calendar.startOfDay(for: expirationDate)
+        
+        let components = calendar.dateComponents([.day], from: startOfToday, to: startOfExpiration)
+        return components.day
+    }
+    
+    var expirationText: String? {
+        guard let days = daysUntilExpiration else { return nil }
+        
+        switch days {
+        case 0:
+            return "tänään"
+        case 1:
+            return "huomenna"
+        case ..<0:
+            return "vanhentunut"
+        default:
+            return "\(days) päivää"
+        }
     }
     
     var isNearExpiration: Bool {

@@ -15,7 +15,7 @@ struct InventoryItemRow: View {
                     .foregroundColor(.gray)
                 
                 if let days = item.daysUntilExpiration {
-                    Text("• \(days) päivää")
+                    Text("• \(item.expirationText ?? "")")
                         .font(.system(.subheadline, design: .rounded))
                         .foregroundColor(item.isNearExpiration ? .orange : .gray)
                 }
