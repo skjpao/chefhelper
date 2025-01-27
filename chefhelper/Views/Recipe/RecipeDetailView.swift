@@ -2,6 +2,7 @@ import SwiftUI
 import SwiftData
 
 struct RecipeDetailView: View {
+    @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
     @Bindable var recipe: Recipe
     
@@ -128,6 +129,7 @@ struct RecipeDetailView: View {
     
     private func deleteRecipe() {
         modelContext.delete(recipe)
+        dismiss()
     }
     
     private func formatAmount(_ amount: Double) -> String {

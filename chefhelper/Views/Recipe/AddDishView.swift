@@ -22,7 +22,34 @@ struct AddDishView: View {
         Form {
             Section(header: Text("Annoksen tiedot")) {
                 TextField("Nimi", text: $name)
+            }
+            
+            Section(header: Text("Komponentit")) {
+                ForEach(components) { component in
+                    HStack {
+                        if let recipe = component.getRecipe(context: modelContext) {
+                            Text("\(recipe.name) (resepti)")
+                                .foregroundStyle(.blue)
+                        } else {
+                            Text(component.name)
+                        }
+                        Spacer()
+                        Text(String(format: "%.0f %@", component.amount, component.unit.rawValue))
+                    }
+                }
+                .onDelete(perform: deleteComponents)
                 
+                Button("Lisää komponentti") {
+                    showingAddComponent = true
+                }
+            }
+            
+            Section(header: Text("Valmistusohjeet")) {
+                TextEditor(text: $instructions)
+                    .frame(minHeight: 100)
+            }
+            
+            Section(header: Text("Kuva")) {
                 if let imageData = imageData, let uiImage = UIImage(data: imageData) {
                     VStack {
                         Image(uiImage: uiImage)
@@ -50,31 +77,6 @@ struct AddDishView: View {
                         Label("Valitse kuva", systemImage: "photo")
                     }
                 }
-            }
-            
-            Section(header: Text("Komponentit")) {
-                ForEach(components) { component in
-                    HStack {
-                        if let recipe = component.getRecipe(context: modelContext) {
-                            Text("\(recipe.name) (resepti)")
-                                .foregroundStyle(.blue)
-                        } else {
-                            Text(component.name)
-                        }
-                        Spacer()
-                        Text(String(format: "%.0f %@", component.amount, component.unit.rawValue))
-                    }
-                }
-                .onDelete(perform: deleteComponents)
-                
-                Button("Lisää komponentti") {
-                    showingAddComponent = true
-                }
-            }
-            
-            Section(header: Text("Valmistusohjeet")) {
-                TextEditor(text: $instructions)
-                    .frame(minHeight: 100)
             }
         }
         .navigationTitle("Uusi annos")

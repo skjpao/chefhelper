@@ -33,34 +33,6 @@ struct EditDishView: View {
             Form {
                 Section(header: Text("Annoksen tiedot")) {
                     TextField("Nimi", text: $name)
-                    
-                    if let imageData = imageData, let uiImage = UIImage(data: imageData) {
-                        VStack {
-                            Image(uiImage: uiImage)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(maxHeight: 200)
-                            
-                            Button(role: .destructive) {
-                                $imageData.wrappedValue = nil
-                            } label: {
-                                Label("Poista kuva", systemImage: "trash")
-                                    .foregroundColor(.red)
-                            }
-                        }
-                    }
-                    
-                    HStack {
-                        Button(action: { showingCamera = true }) {
-                            Label("Ota kuva", systemImage: "camera")
-                        }
-                        
-                        Spacer()
-                        
-                        PhotosPicker(selection: $selectedImage, matching: .images) {
-                            Label("Valitse kuva", systemImage: "photo")
-                        }
-                    }
                 }
                 
                 Section(header: Text("Komponentit")) {
@@ -102,6 +74,36 @@ struct EditDishView: View {
                 Section(header: Text("Valmistusohje")) {
                     TextEditor(text: $instructions)
                         .frame(minHeight: 100)
+                }
+                
+                Section(header: Text("Kuva")) {
+                    if let imageData = imageData, let uiImage = UIImage(data: imageData) {
+                        VStack {
+                            Image(uiImage: uiImage)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(maxHeight: 200)
+                            
+                            Button(role: .destructive) {
+                                $imageData.wrappedValue = nil
+                            } label: {
+                                Label("Poista kuva", systemImage: "trash")
+                                    .foregroundColor(.red)
+                            }
+                        }
+                    }
+                    
+                    HStack {
+                        Button(action: { showingCamera = true }) {
+                            Label("Ota kuva", systemImage: "camera")
+                        }
+                        
+                        Spacer()
+                        
+                        PhotosPicker(selection: $selectedImage, matching: .images) {
+                            Label("Valitse kuva", systemImage: "photo")
+                        }
+                    }
                 }
             }
             .navigationTitle("Muokkaa annosta")
