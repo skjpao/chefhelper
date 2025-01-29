@@ -1,0 +1,257 @@
+// General
+"settings" = "Settings";
+"cancel" = "Cancel";
+"save" = "Save";
+"done" = "Done";
+"add" = "Add";
+"edit" = "Edit";
+"delete" = "Delete";
+"error" = "Error";
+"ok" = "OK";
+"unit" = "Unit";
+
+// Navigation
+"recipes" = "Recipes";
+"dishes" = "Dishes";
+"inventory" = "Inventory";
+"staff" = "Staff";
+
+// Settings
+"language" = "Language";
+"select_language" = "Select Language";
+
+// Inventory
+"inventory_value" = "Inventory value:";
+"no_items" = "No items";
+"expiring_products" = "Expiring products";
+"days_remaining" = "days remaining";
+"today" = "Today";
+"tomorrow" = "Tomorrow";
+"expired" = "Expired";
+"select_date" = "Select date";
+
+// Categories
+"all" = "All";
+"fresh" = "Fresh";
+"dry" = "Dry";
+"misc" = "Misc";
+
+// Recipes
+"no_recipes" = "No recipes";
+"no_dishes" = "No dishes";
+"ingredients" = "ingredients";
+"components" = "components";
+"view" = "View";
+"recipe_details" = "Recipe Details";
+"recipe_name" = "Recipe Name";
+"ingredients_title" = "Ingredients";
+"instructions_title" = "Instructions";
+"add_ingredient" = "Add Ingredient";
+"enter_ingredient_name" = "Enter ingredient name";
+"enter_amount" = "Enter amount in numbers";
+"scaling" = "Scaling";
+"scaling_factor" = "Scaling Factor";
+"delete_recipe_confirmation" = "Are you sure you want to delete this recipe?";
+"cannot_undo" = "This action cannot be undone";
+"edit_recipe" = "Edit Recipe";
+"new_recipe" = "New Recipe";
+"no_ingredients" = "No ingredients";
+"ingredient_not_in_inventory" = "Ingredient not found in inventory";
+
+// Dishes
+"dish_details" = "Dish Details";
+"components_title" = "Components";
+"add_component" = "Add Component";
+"add_from_recipe" = "Add from Recipe";
+"search_recipe" = "Search recipe...";
+"not_linked_to_inventory" = "Not linked to inventory";
+"unit_conversion_impossible" = "Unit conversion not possible";
+"sufficient_stock" = "Sufficient stock";
+"insufficient_stock" = "Insufficient stock";
+"recipe_reference" = "recipe";
+"delete_dish" = "Delete dish";
+"dish_name" = "Dish name";
+"edit_dish" = "Edit dish";
+"image" = "Image";
+"remove_image" = "Remove image";
+"take_photo" = "Take photo";
+
+// Application
+"app_name" = "ChefHelper";
+"loading" = "Loading...";
+
+// New additions
+"comments" = "Comments";
+"add_comment" = "Add comment";
+"delete_recipe" = "Delete recipe";
+"enter_dish_name" = "Enter dish name";
+"component_details" = "Component details";
+"component_name" = "Component name";
+"amount" = "Amount";
+"link_to_recipe" = "Link to recipe (optional)";
+"enter_component_name" = "Enter component name";
+"select_recipe" = "Select recipe";
+"new_dish" = "New dish";
+"delete_dish_confirmation" = "Are you sure you want to delete this dish?";
+"add_first_dish" = "Add your first dish by tapping the + button";
+"item_details" = "Item Details";
+"item_name" = "Item Name";
+"price" = "Price";
+"expiry_date" = "Expiry Date";
+"category" = "Category";
+"new_item" = "New Item";
+"enter_item_name" = "Enter item name";
+"enter_recipe_name" = "Enter recipe name";
+"enter_price" = "Enter price";
+"edit_item" = "Edit Item";
+"close" = "Close";
+"week" = "Week";
+"select_week" = "Select Week";
+"shifts_count" = "Shifts";
+"day_schedule" = "Day Schedule";
+"no_shifts_for_day" = "No shifts for this day";
+"shift_time" = "Shift Time";
+"staff_count" = "Staff Count";
+"time_range" = "Time Range";
+"upcoming_shifts" = "Upcoming";
+"notes" = "Notes";
+"add_note" = "Add note";
+"calendar" = "Calendar";
+"no_components" = "No components";
+"all_components_available" = "All components available";
+"missing_components" = "Missing components";
+
+// Staff
+"position" = "Position";
+"select_staff" = "Select Staff";
+"kitchen_supervisor" = "Kitchen Supervisor";
+"service_supervisor" = "Service Supervisor";
+"head_chef" = "Head Chef";
+"restaurant_manager" = "Restaurant Manager";
+"cook" = "Cook";
+"server" = "Server";
+"dishwasher" = "Dishwasher";
+"enter_staff_name" = "Enter staff member's name";
+"enter_phone_number" = "Enter phone number";
+"past_shifts" = "Past";
+"no_upcoming_shifts" = "No upcoming shifts";
+"no_past_shifts" = "No past shifts";
+"invalid_phone_number" = "Enter a valid phone number (5-15 digits)"; 
+"delete_staff_confirmation" = "Are you sure you want to delete this staff member?";
+"staff_details" = "Staff Details";
+"basic_info" = "Basic Information";
+"name" = "Name";
+"role" = "Role";
+"phone_number" = "Phone Number";
+"color_code" = "Color Code";
+"add_staff" = "Add Staff";
+"no_shifts" = "No upcoming shifts";
+"add_first_staff" = "Add your first staff member by tapping the + button";
+"shifts" = "Shifts";
+"schedule" = "Schedule";
+"add_shift" = "Add Shift";
+"edit_staff" = "Edit Staff";
+
+// Units
+"kilogram" = "kg";
+"liter" = "l";
+"piece" = "pcs";
+
+// Colors
+"blue" = "Blue";
+"green" = "Green";
+"red" = "Red";
+"orange" = "Orange";
+"purple" = "Purple";
+"turquoise" = "Turquoise";
+"brown" = "Brown";
+"gray" = "Gray";
+
+// Ingredients
+"carrot" = "Carrot";
+"potato" = "Potato";
+"onion" = "Onion";
+"garlic" = "Garlic";
+"tomato" = "Tomato";
+"cucumber" = "Cucumber";
+"bell_pepper" = "Bell Pepper";
+"zucchini" = "Zucchini";
+"eggplant" = "Eggplant";
+"apple" = "Apple";
+"pear" = "Pear";
+"blueberry" = "Blueberry";
+"raspberry" = "Raspberry";
+"strawberry" = "Strawberry";
+"beef_tenderloin" = "Beef Tenderloin";
+"pork_loin" = "Pork Loin";
+"chicken_breast" = "Chicken Breast";
+"lamb_chops" = "Lamb Chops";
+"duck_breast" = "Duck Breast";
+"salmon" = "Salmon";
+"whitefish" = "Whitefish";
+"perch" = "Perch";
+"pike_perch" = "Pike Perch";
+"flounder" = "Flounder";
+"cream" = "Cream";
+"milk" = "Milk";
+"butter" = "Butter";
+"mascarpone" = "Mascarpone";
+"creme_fraiche" = "Creme Fraiche";
+"basil" = "Basil";
+"thyme" = "Thyme";
+"rosemary" = "Rosemary";
+"oregano" = "Oregano";
+"parsley" = "Parsley";
+"wheat_flour" = "Wheat Flour";
+"rye_flour" = "Rye Flour";
+"buckwheat_flour" = "Buckwheat Flour";
+"rice" = "Rice";
+"pasta" = "Pasta";
+"black_pepper" = "Black Pepper";
+"cinnamon" = "Cinnamon";
+"cardamom" = "Cardamom";
+"curry" = "Curry";
+"paprika_powder" = "Paprika Powder";
+"olive_oil" = "Olive Oil";
+"balsamic_vinegar" = "Balsamic Vinegar";
+"soy_sauce" = "Soy Sauce";
+"honey" = "Honey";
+"mustard" = "Mustard";
+
+// Camera
+"camera_permission" = "Camera Permission";
+"open_settings" = "Open Settings";
+"camera_permission_needed" = "We need camera permission to take photos";
+"camera_permission_denied" = "Camera access is denied. You can change this in phone settings.";
+"camera_permission_error" = "Could not check camera permission";
+
+// Search
+"search" = "Search...";
+
+// Measurement units
+"gram" = "g";
+"deciliter" = "dl";
+"kilogram" = "kg";
+"liter" = "l";
+"piece" = "pcs";
+
+// Schedule
+"time" = "Time";
+"week" = "Week";
+"select_week" = "Select Week";
+"shifts_count" = "Shifts";
+"time_range" = "Time Range";
+"day_schedule" = "Day Schedule";
+"no_shifts_for_day" = "No shifts for this day";
+"shift_time" = "Shift Time";
+"staff_count" = "Staff Count";
+"upcoming_shifts" = "Upcoming";
+
+// Weekdays
+"monday_short" = "Mon";
+"tuesday_short" = "Tue";
+"wednesday_short" = "Wed";
+"thursday_short" = "Thu";
+"friday_short" = "Fri";
+"saturday_short" = "Sat";
+"sunday_short" = "Sun";

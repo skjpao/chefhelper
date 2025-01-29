@@ -17,11 +17,15 @@ class Recipe {
     }
     
     var possiblePortions: Int {
-        guard !ingredients.isEmpty else { return 0 }
+        guard !ingredients.isEmpty else { 
+            return 0 // "no_ingredients".localized
+        }
         
         return ingredients.compactMap { ingredient -> Int? in
-            guard let item = ingredient.inventoryItem else { return nil }
-            let convertedAmount = ingredient.amount // Tässä pitäisi tehdä yksikkömuunnos
+            guard let item = ingredient.inventoryItem else { 
+                return nil // "ingredient_not_in_inventory".localized
+            }
+            let convertedAmount = ingredient.amount
             let possiblePortions = Int((item.amount / convertedAmount) * Double(portionSize))
             return possiblePortions
         }.min() ?? 0

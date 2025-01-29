@@ -19,84 +19,97 @@ struct AddDishView: View {
     @State private var imageData: Data? = nil
     
     var body: some View {
-        Form {
-            Section(header: Text("Annoksen tiedot")) {
-                TextField("Nimi", text: $name)
-            }
-            
-            Section(header: Text("Komponentit")) {
-                ForEach(components) { component in
-                    HStack {
-                        if let recipe = component.getRecipe(context: modelContext) {
-                            Text("\(recipe.name) (resepti)")
-                                .foregroundStyle(.blue)
-                        } else {
-                            Text(component.name)
-                        }
-                        Spacer()
-                        Text(String(format: "%.0f %@", component.amount, component.unit.rawValue))
-                    }
+        VStack {
+            Form {
+                Section(header: Text("dish_name".localized)) {
+                    TextField("enter_dish_name".localized, text: $name)
                 }
-                .onDelete(perform: deleteComponents)
                 
-                Button("Lisää komponentti") {
-                    showingAddComponent = true
-                }
-            }
-            
-            Section(header: Text("Valmistusohjeet")) {
-                TextEditor(text: $instructions)
-                    .frame(minHeight: 100)
-            }
-            
-            Section(header: Text("Kuva")) {
-                if let imageData = imageData, let uiImage = UIImage(data: imageData) {
-                    VStack {
-                        Image(uiImage: uiImage)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(maxHeight: 200)
-                        
-                        Button(role: .destructive) {
-                            $imageData.wrappedValue = nil
-                        } label: {
-                            Label("Poista kuva", systemImage: "trash")
-                                .foregroundColor(.red)
+                Section(header: Text("components_title".localized)) {
+                    ForEach(components) { component in
+                        HStack {
+                            if let recipe = component.getRecipe(context: modelContext) {
+                                Text("\(recipe.name) (\("recipe_reference".localized))")
+                                    .foregroundStyle(.brown)
+                            } else {
+                                Text(component.name)
+                            }
+                            Spacer()
+                            Text(String(format: "%.0f %@", component.amount, component.unit.rawValue))
                         }
+                    }
+                    .onDelete(perform: deleteComponents)
+                    
+                    Button(action: addComponent) {
+                        HStack {
+                            Image(systemName: "plus.circle.fill")
+                            Text("add_component".localized)
+                        }
+                        .foregroundColor(.brown)
                     }
                 }
                 
-                HStack {
-                    Button(action: { showingCamera = true }) {
-                        Label("Ota kuva", systemImage: "camera")
+                Section(header: Text("instructions_title".localized)) {
+                    TextEditor(text: $instructions)
+                        .frame(minHeight: 100)
+                }
+                
+                Section(header: Text("image".localized)) {
+                    if let imageData = imageData, let uiImage = UIImage(data: imageData) {
+                        VStack {
+                            Image(uiImage: uiImage)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(maxHeight: 200)
+                            
+                            Button(role: .destructive) {
+                                self.imageData = nil
+                            } label: {
+                                Text("remove_image".localized)
+                                    .foregroundColor(.red)
+                            }
+                        }
                     }
                     
-                    Spacer()
-                    
-                    PhotosPicker(selection: $selectedImage, matching: .images) {
-                        Label("Valitse kuva", systemImage: "photo")
+                    Button("take_photo".localized) {
+                        showingCamera = true
                     }
+                    .foregroundColor(.brown)
                 }
             }
+            
+            // Bottom buttons with rustic styling
+            HStack {
+                Button(action: { dismiss() }) {
+                    Text("cancel".localized)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.brown.opacity(0.1))
+                        .foregroundColor(.brown)
+                        .cornerRadius(8)
+                }
+                Button(action: saveDish) {
+                    Text("save".localized)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.brown)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+            }
+            .padding()
         }
-        .navigationTitle("Uusi annos")
+        .navigationTitle("new_dish".localized)
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                Button("Peruuta") { dismiss() }
-            }
-            ToolbarItem(placement: .confirmationAction) {
-                Button("Lisää") { saveDish() }
-            }
-        }
+        .tint(.brown)
         .sheet(isPresented: $showingAddComponent) {
             AddComponentView(components: $components)
         }
         .sheet(isPresented: $showingCamera) {
             CameraView(imageData: $imageData)
         }
-        .alert("Virhe", isPresented: $showingAlert) {
-            Button("OK", role: .cancel) { }
+        .alert("error".localized, isPresented: $showingAlert) {
+            Button("ok".localized, role: .cancel) { }
         } message: {
             Text(alertMessage)
         }
@@ -113,9 +126,13 @@ struct AddDishView: View {
         components.remove(atOffsets: offsets)
     }
     
+    private func addComponent() {
+        showingAddComponent = true
+    }
+    
     private func saveDish() {
         guard !name.isEmpty else {
-            alertMessage = "Syötä annoksen nimi"
+            alertMessage = "enter_dish_name".localized
             showingAlert = true
             return
         }

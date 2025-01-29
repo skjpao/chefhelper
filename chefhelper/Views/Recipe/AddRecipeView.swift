@@ -20,13 +20,13 @@ struct AddRecipeView: View {
     var body: some View {
         VStack {
             Form {
-                Section(header: Text("Reseptin nimi")) {
-                    TextField("Nimi", text: $name)
+                Section(header: Text("recipe_name".localized)) {
+                    TextField("recipe_name".localized, text: $name)
                 }
                 
-                Section(header: Text("Ainesosat")) {
-                    VStack(spacing: 10) {
-                        TextField("Ainesosan nimi", text: $newIngredientName)
+                Section(header: Text("ingredients_title".localized)) {
+                    VStack(spacing: 12) {
+                        TextField("enter_ingredient_name".localized, text: $newIngredientName)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .onChange(of: newIngredientName) { _, newValue in
                                 showingSuggestions = !newValue.isEmpty
@@ -44,7 +44,7 @@ struct AddRecipeView: View {
                                             VStack(alignment: .leading) {
                                                 Text(item.name)
                                                     .foregroundColor(.brown)
-                                                Text(item.category.rawValue)
+                                                Text(item.category.localizedName)
                                                     .font(.caption)
                                                     .foregroundColor(.gray)
                                             }
@@ -59,104 +59,104 @@ struct AddRecipeView: View {
                             }
                         }
                         
-                        TextField("Määrä", text: $newIngredientAmount)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .keyboardType(.decimalPad)
-                        
-                        Picker("Yksikkö", selection: $selectedUnit) {
-                            ForEach(RecipeUnit.allCases, id: \.self) { unit in
-                                Text(unit.rawValue).tag(unit)
+                        HStack(spacing: 12) {
+                            TextField("amount".localized, text: $newIngredientAmount)
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .keyboardType(.decimalPad)
+                                .frame(maxWidth: .infinity)
+                            
+                            Picker("", selection: $selectedUnit) {
+                                ForEach(RecipeUnit.allCases, id: \.self) { unit in
+                                    Text(unit.localizedName).tag(unit)
+                                }
                             }
+                            .frame(maxWidth: 100)
+                            .clipped()
                         }
                         
                         Button(action: addIngredient) {
                             HStack {
                                 Image(systemName: "plus.circle.fill")
-                                Text("Lisää ainesosa")
+                                Text("add_ingredient".localized)
                             }
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 8)
+                            .background(Color.brown.opacity(0.1))
                             .foregroundColor(.brown)
+                            .cornerRadius(8)
                         }
-                        .buttonStyle(.bordered)
-                        .tint(.brown)
-                        .padding(.vertical, 5)
                     }
                     .padding(.vertical, 8)
                     
                     if !ingredients.isEmpty {
+                        Divider()
+                            .padding(.vertical, 8)
+                        
                         ForEach(ingredients) { ingredient in
                             HStack {
-                                Text("\(ingredient.name): \(String(format: "%.1f", ingredient.amount))g")
-                                    .foregroundColor(.brown)
+                                Text(ingredient.name)
                                 Spacer()
+                                Text("\(String(format: "%.1f", ingredient.amount)) \(ingredient.unit.localizedName)")
+                                    .foregroundColor(.gray)
                                 Button(action: { deleteIngredient(ingredient) }) {
                                     Image(systemName: "trash")
                                         .foregroundColor(.red)
                                 }
                             }
+                            .padding(.vertical, 4)
                         }
                     }
                 }
                 
-                Section(header: Text("Ohjeet")) {
+                Section(header: Text("instructions_title".localized)) {
                     TextEditor(text: $instructions)
                         .frame(minHeight: 150)
                 }
             }
             
             // Bottom buttons with rustic styling
-            VStack(spacing: 10) {
-                Button(action: saveRecipe) {
-                    Text("Tallenna resepti")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.brown)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                }
-                
+            HStack {
                 Button(action: { dismiss() }) {
-                    Text("Peruuta")
+                    Text("cancel".localized)
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(Color.brown.opacity(0.1))
                         .foregroundColor(.brown)
                         .cornerRadius(8)
                 }
+                Button(action: saveRecipe) {
+                    Text("save".localized)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.brown)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
             }
             .padding()
         }
-        .navigationTitle("Uusi resepti")
+        .navigationTitle("new_recipe".localized)
         .navigationBarTitleDisplayMode(.inline)
-        .alert("Virhe", isPresented: $showingAlert) {
-            Button("OK", role: .cancel) { }
+        .alert("error".localized, isPresented: $showingAlert) {
+            Button("ok".localized, role: .cancel) { }
         } message: {
             Text(alertMessage)
         }
     }
     
     private func addIngredient() {
-        guard !newIngredientName.isEmpty else {
-            alertMessage = "Syötä ainesosan nimi"
-            showingAlert = true
-            return
-        }
-        
-        guard let amount = Double(newIngredientAmount.replacingOccurrences(of: ",", with: ".")) else {
-            alertMessage = "Syötä määrä numeroina"
-            showingAlert = true
-            return
-        }
+        guard let amount = Double(newIngredientAmount.replacingOccurrences(of: ",", with: ".")) else { return }
         
         let ingredient = RecipeIngredient(
             name: newIngredientName,
             amount: amount,
-            unit: selectedUnit.rawValue
+            unit: selectedUnit,
+            inventoryItem: inventoryItems.first { $0.name == newIngredientName }
         )
         
         ingredients.append(ingredient)
         newIngredientName = ""
         newIngredientAmount = ""
-        selectedUnit = .g
     }
     
     private func deleteIngredient(_ ingredient: RecipeIngredient) {
@@ -165,13 +165,13 @@ struct AddRecipeView: View {
     
     private func saveRecipe() {
         guard !name.isEmpty else {
-            alertMessage = "Syötä reseptin nimi"
+            alertMessage = "enter_recipe_name".localized
             showingAlert = true
             return
         }
         
         guard !ingredients.isEmpty else {
-            alertMessage = "Lisää vähintään yksi ainesosa"
+            alertMessage = "add_at_least_one_ingredient".localized
             showingAlert = true
             return
         }

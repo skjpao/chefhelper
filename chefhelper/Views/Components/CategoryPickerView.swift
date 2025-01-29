@@ -4,7 +4,7 @@ struct CategoryPickerView: View {
     @Binding var selectedCategory: Category
     
     var body: some View {
-        Picker("Kategoria", selection: $selectedCategory) {
+        Picker("category".localized, selection: $selectedCategory) {
             ForEach(Category.allCases, id: \.self) { category in
                 HStack {
                     Text(category.rawValue)

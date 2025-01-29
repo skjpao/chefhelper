@@ -15,7 +15,11 @@ class Ingredient {
 }
 
 enum IngredientUnit: String, Codable, CaseIterable {
-    case kg = "kg"
-    case l = "l"
-    case kpl = "kpl"
+    case kg = "Kilogram"
+    case l = "Liter"
+    case kpl = "Piece"
+    
+    var localizedName: String {
+        return self.rawValue.localized
+    }
 }

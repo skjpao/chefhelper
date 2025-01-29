@@ -7,96 +7,154 @@ struct AddInventoryItemView: View {
     
     @State private var name = ""
     @State private var amount = ""
-    @State private var selectedUnit: InventoryUnit = .kg
-    @State private var selectedCategory: Category = .fresh
-    @State private var expiryDate: Date? = nil
+    @State private var selectedUnit = InventoryUnit.kg
+    @State private var selectedCategory = Category.fresh
+    @State private var pricePerUnit = ""
+    @State private var hasExpiryDate = false
+    @State private var expiryDate = Date()
     @State private var showingAlert = false
     @State private var alertMessage = ""
-    @State private var pricePerUnit = ""
+    
+    private var datePicker: some View {
+        DatePicker("", selection: Binding(
+            get: { expiryDate },
+            set: { 
+                expiryDate = $0
+            }
+        ), displayedComponents: .date)
+        .labelsHidden()
+    }
     
     var body: some View {
         Form {
-            Section(header: Text("Tuotteen tiedot")) {
-                TextField("Nimi", text: $name)
+            Section(header: Text("item_details".localized)) {
+                HStack {
+                    Text("name".localized)
+                        .foregroundColor(.brown)
+                    Spacer()
+                    TextField("item_name".localized, text: $name)
+                        .multilineTextAlignment(.trailing)
+                }
                 
                 HStack {
-                    TextField("Määrä", text: $amount)
-                        .keyboardType(.decimalPad)
-                    
-                    Picker("Yksikkö", selection: $selectedUnit) {
-                        ForEach(InventoryUnit.allCases, id: \.self) { unit in
-                            Text(unit.rawValue).tag(unit)
-                        }
-                    }
-                    .pickerStyle(.segmented)
+                    Text("category".localized)
+                        .foregroundColor(.brown)
+                    Spacer()
+                    categoryPicker
                 }
                 
-                TextField("Hinta/\(selectedUnit.rawValue)", text: $pricePerUnit)
-                    .keyboardType(.decimalPad)
-
-                Picker("Kategoria", selection: $selectedCategory) {
-                    ForEach(Category.addCases, id: \.self) { category in
-                        Text(category.rawValue).tag(category)
-                    }
+                HStack {
+                    Text("amount".localized)
+                        .foregroundColor(.brown)
+                    Spacer()
+                    TextField("amount".localized, text: $amount)
+                        .multilineTextAlignment(.trailing)
+                        .keyboardType(.decimalPad)
                 }
-            }
-            
-            Section(header: Text("Päivämäärät")) {
+                
+                HStack {
+                    Text("unit".localized)
+                        .foregroundColor(.brown)
+                    Spacer()
+                    unitPicker
+                }
+                
+                HStack {
+                    Text("price".localized)
+                        .foregroundColor(.brown)
+                    Spacer()
+                    TextField("enter_price".localized, text: $pricePerUnit)
+                        .multilineTextAlignment(.trailing)
+                        .keyboardType(.decimalPad)
+                }
+                
                 if selectedCategory == .fresh {
-                    Toggle("Viimeinen käyttöpäivä", isOn: Binding(
-                        get: { expiryDate != nil },
-                        set: { if !$0 { expiryDate = nil } else { expiryDate = Date() } }
-                    ))
+                    Toggle(isOn: $hasExpiryDate) {
+                        Text("expiry_date".localized)
+                            .foregroundColor(.brown)
+                    }
                     
-                    if expiryDate != nil {
-                        DatePicker(
-                            "Viimeinen käyttöpäivä",
-                            selection: Binding(
-                                get: { expiryDate ?? Date() },
-                                set: { expiryDate = $0 }
-                            ),
-                            displayedComponents: .date
-                        )
+                    if hasExpiryDate {
+                        HStack {
+                            Text("select_date".localized)
+                                .foregroundColor(.brown)
+                            Spacer()
+                            datePicker
+                        }
                     }
                 }
             }
         }
-        .navigationTitle("Lisää tuote")
+        .navigationTitle("new_item".localized)
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                Button("Peruuta") {
-                    dismiss()
+        .scrollDismissesKeyboard(.interactively)
+        .safeAreaInset(edge: .bottom) {
+            HStack {
+                Button(action: { dismiss() }) {
+                    Text("cancel".localized)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.brown.opacity(0.1))
+                        .foregroundColor(.brown)
+                        .cornerRadius(8)
+                }
+                Button(action: addItem) {
+                    Text("save".localized)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.brown)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
                 }
             }
-            ToolbarItem(placement: .confirmationAction) {
-                Button("Tallenna") {
-                    saveItem()
-                }
-            }
+            .padding()
         }
-        .alert("Virhe", isPresented: $showingAlert) {
-            Button("OK", role: .cancel) { }
+        .alert("error".localized, isPresented: $showingAlert) {
+            Button("ok".localized, role: .cancel) { }
         } message: {
             Text(alertMessage)
         }
     }
     
-    private func saveItem() {
+    private var categoryPicker: some View {
+        Picker("", selection: $selectedCategory) {
+            ForEach([Category.fresh, .dry, .misc], id: \.self) { category in
+                Text(category.localizedName)
+                    .tag(category)
+                    .foregroundColor(.primary)
+            }
+        }
+        .tint(.primary)
+        .labelsHidden()
+    }
+    
+    private var unitPicker: some View {
+        Picker("", selection: $selectedUnit) {
+            ForEach(InventoryUnit.allCases, id: \.self) { unit in
+                Text(unit.localizedName)
+                    .tag(unit)
+                    .foregroundColor(.primary)
+            }
+        }
+        .tint(.primary)
+        .labelsHidden()
+    }
+    
+    private func addItem() {
         guard !name.isEmpty else {
-            alertMessage = "Syötä tuotteen nimi"
+            alertMessage = "enter_item_name".localized
             showingAlert = true
             return
         }
         
-        guard let amountValue = Double(amount) else {
-            alertMessage = "Syötä määrä numeroina"
+        guard let amountValue = Double(amount.replacingOccurrences(of: ",", with: ".")) else {
+            alertMessage = "enter_amount".localized
             showingAlert = true
             return
         }
         
         guard let priceValue = Double(pricePerUnit.replacingOccurrences(of: ",", with: ".")) else {
-            alertMessage = "Syötä hinta numeroina"
+            alertMessage = "enter_price".localized
             showingAlert = true
             return
         }
@@ -107,25 +165,26 @@ struct AddInventoryItemView: View {
             unit: selectedUnit,
             category: selectedCategory,
             pricePerUnit: priceValue,
-            expirationDate: expiryDate
+            expirationDate: hasExpiryDate ? Calendar.current.startOfDay(for: expiryDate) : nil
         )
         
-        // Add debug print to verify item creation
-        print("Adding item: \(item.name) with amount: \(item.amount) \(item.unit.rawValue)")
+        print("Creating new item:")
+        print("Name: \(item.name)")
+        print("Amount: \(item.amount) \(item.unit.rawValue)")
+        print("Category: \(item.category.rawValue)")
+        print("Price: \(item.pricePerUnit)")
+        print("Expiration: \(String(describing: item.expirationDate))")
         
-        // Explicitly insert into model context
         modelContext.insert(item)
         
         do {
             try modelContext.save()
             print("Item saved successfully")
+            dismiss()
         } catch {
             print("Failed to save item: \(error)")
-            alertMessage = "Virhe tallennuksessa: \(error.localizedDescription)"
+            alertMessage = "save_error".localized
             showingAlert = true
-            return
         }
-        
-        dismiss()
     }
 }

@@ -1,0 +1,257 @@
+// Allmänt
+"settings" = "Inställningar";
+"cancel" = "Avbryt";
+"save" = "Spara";
+"done" = "Klar";
+"add" = "Lägg till";
+"edit" = "Redigera";
+"delete" = "Radera";
+"error" = "Fel";
+"ok" = "OK";
+"unit" = "Enhet";
+
+// Navigation
+"recipes" = "Recept";
+"dishes" = "Rätter";
+"inventory" = "Lager";
+"staff" = "Personal";
+
+// Inställningar
+"language" = "Språk";
+"select_language" = "Välj språk";
+
+// Lager
+"inventory_value" = "Lagervärde:";
+"no_items" = "Inga varor";
+"expiring_products" = "Utgående produkter";
+"days_remaining" = "dagar kvar";
+"today" = "Idag";
+"tomorrow" = "Imorgon";
+"expired" = "Utgången";
+
+// Kategorier
+"all" = "Alla";
+"fresh" = "Färsk";
+"dry" = "Torr";
+"misc" = "Övrigt";
+"category" = "Kategori";
+
+// Personal
+"shift_details" = "Skiftdetaljer";
+"date" = "Datum";
+"starts" = "Börjar";
+"ends" = "Slutar";
+"overlapping_shift" = "Personen har redan ett skift under denna tid";
+"staff_details" = "Personaluppgifter";
+"basic_info" = "Grundläggande information";
+"name" = "Namn";
+"role" = "Roll";
+"phone_number" = "Telefonnummer";
+"color_code" = "Färgkod";
+"add_staff" = "Lägg till personal";
+"no_shifts" = "Inga kommande skift";
+"add_first_staff" = "Lägg till första anställd genom att trycka på + knappen";
+"shifts" = "Skift";
+"schedule" = "Schema";
+"add_shift" = "Lägg till skift";
+"edit_staff" = "Redigera personal";
+
+// Roller
+"kitchen_supervisor" = "Kökschef";
+"service_supervisor" = "Servicechef";
+"head_chef" = "Köksmästare";
+"restaurant_manager" = "Restaurangchef";
+"cook" = "Kock";
+"server" = "Servitör";
+"dishwasher" = "Diskare";
+
+// Enheter
+"gram" = "g";
+"deciliter" = "dl";
+"kilogram" = "kg";
+"liter" = "l";
+"piece" = "st";
+
+// Validering
+"enter_staff_name" = "Ange personalens namn";
+"enter_phone_number" = "Ange telefonnummer";
+"invalid_phone_number" = "Ange ett giltigt telefonnummer (5-15 siffror)";
+
+// Skift
+"upcoming_shifts" = "Kommande";
+"past_shifts" = "Tidigare";
+"no_upcoming_shifts" = "Inga kommande skift";
+"no_past_shifts" = "Inga tidigare skift";
+"delete_staff_confirmation" = "Är du säker på att du vill radera denna personal?";
+"cannot_undo" = "Denna åtgärd kan inte ångras";
+
+// Reseptit
+"no_recipes" = "Inga recept";
+"no_dishes" = "Inga rätter";
+"ingredients" = "ingredienser";
+"components" = "komponenter";
+"view" = "Visa";
+"recipe_details" = "Receptdetaljer";
+"recipe_name" = "Receptnamn";
+"ingredients_title" = "Ingredienser";
+"instructions_title" = "Instruktioner";
+"add_ingredient" = "Lägg till ingrediens";
+"enter_ingredient_name" = "Ange ingrediensnamn";
+"enter_amount" = "Ange mängd i siffror";
+"scaling" = "Skalning";
+"scaling_factor" = "Skalningsfaktor";
+"delete_recipe_confirmation" = "Är du säker på att du vill radera detta recept?";
+"edit_recipe" = "Redigera recept";
+"new_recipe" = "Nytt recept";
+"no_ingredients" = "Inga ingredienser";
+"ingredient_not_in_inventory" = "Ingrediens finns inte i lager";
+
+// Rätter
+"dish_details" = "Rättdetaljer";
+"components_title" = "Komponenter";
+"add_component" = "Lägg till komponent";
+"add_from_recipe" = "Lägg till från recept";
+"search_recipe" = "Sök recept...";
+"not_linked_to_inventory" = "Ej kopplad till lager";
+"unit_conversion_impossible" = "Enhetskonvertering ej möjlig";
+"sufficient_stock" = "Tillräckligt i lager";
+"insufficient_stock" = "Otillräckligt i lager";
+"recipe_reference" = "recept";
+"delete_dish" = "Radera rätt";
+"dish_name" = "Rättnamn";
+"edit_dish" = "Redigera rätt";
+"image" = "Bild";
+"remove_image" = "Ta bort bild";
+"take_photo" = "Ta foto";
+
+// Applikation
+"app_name" = "ChefHelper";
+"loading" = "Laddar...";
+
+// Kommentarer
+"comments" = "Kommentarer";
+"add_comment" = "Lägg till kommentar";
+"delete_recipe" = "Radera recept";
+"enter_dish_name" = "Ange rättnamn";
+"component_details" = "Komponentdetaljer";
+"component_name" = "Komponentnamn";
+"amount" = "Mängd";
+"link_to_recipe" = "Länka till recept (valfritt)";
+"enter_component_name" = "Ange komponentnamn";
+"select_recipe" = "Välj recept";
+"new_dish" = "Ny rätt";
+"delete_dish_confirmation" = "Är du säker på att du vill radera denna rätt?";
+"add_first_dish" = "Lägg till din första rätt genom att trycka på + knappen";
+
+// Lagerartiklar
+"item_details" = "Artikeldetaljer";
+"item_name" = "Artikelnamn";
+"price" = "Pris";
+"expiry_date" = "Utgångsdatum";
+"new_item" = "Ny artikel";
+"enter_item_name" = "Ange artikelnamn";
+"enter_recipe_name" = "Ange receptnamn";
+"enter_price" = "Ange pris";
+"edit_item" = "Redigera artikel";
+"close" = "Stäng";
+
+// Schema
+"calendar" = "Kalender";
+"week" = "Vecka";
+"select_week" = "Välj vecka";
+"shifts_count" = "Antal skift";
+"time" = "Tid";
+"position" = "Position";
+"select_staff" = "Välj personal";
+"day_schedule" = "Dagsschema";
+"no_shifts_for_day" = "Inga skift denna dag";
+"shift_time" = "Skifttid";
+"staff_count" = "Personalantal";
+"time_range" = "Tidsintervall";
+"notes" = "Anteckningar";
+"add_note" = "Lägg till anteckning";
+
+// Veckodagar
+"monday_short" = "Mån";
+"tuesday_short" = "Tis";
+"wednesday_short" = "Ons";
+"thursday_short" = "Tor";
+"friday_short" = "Fre";
+"saturday_short" = "Lör";
+"sunday_short" = "Sön";
+
+// Komponenter
+"no_components" = "Inga komponenter";
+"all_components_available" = "Alla komponenter tillgängliga";
+"missing_components" = "Saknade komponenter";
+
+// Färger
+"blue" = "Blå";
+"green" = "Grön";
+"red" = "Röd";
+"orange" = "Orange";
+"purple" = "Lila";
+"turquoise" = "Turkos";
+"brown" = "Brun";
+"gray" = "Grå";
+
+// Ingredienser
+"carrot" = "Morot";
+"potato" = "Potatis";
+"onion" = "Lök";
+"garlic" = "Vitlök";
+"tomato" = "Tomat";
+"cucumber" = "Gurka";
+"bell_pepper" = "Paprika";
+"zucchini" = "Zucchini";
+"eggplant" = "Aubergine";
+"apple" = "Äpple";
+"pear" = "Päron";
+"blueberry" = "Blåbär";
+"raspberry" = "Hallon";
+"strawberry" = "Jordgubbe";
+"beef_tenderloin" = "Oxfilé";
+"pork_loin" = "Fläskfilé";
+"chicken_breast" = "Kycklingfilé";
+"lamb_chops" = "Lammkotletter";
+"duck_breast" = "Ankbröst";
+"salmon" = "Lax";
+"whitefish" = "Sik";
+"perch" = "Abborre";
+"pike_perch" = "Gös";
+"flounder" = "Flundra";
+"cream" = "Grädde";
+"milk" = "Mjölk";
+"butter" = "Smör";
+"mascarpone" = "Mascarpone";
+"creme_fraiche" = "Crème fraiche";
+"basil" = "Basilika";
+"thyme" = "Timjan";
+"rosemary" = "Rosmarin";
+"oregano" = "Oregano";
+"parsley" = "Persilja";
+"wheat_flour" = "Vetemjöl";
+"rye_flour" = "Rågmjöl";
+"buckwheat_flour" = "Bovetemjöl";
+"rice" = "Ris";
+"pasta" = "Pasta";
+"black_pepper" = "Svartpeppar";
+"cinnamon" = "Kanel";
+"cardamom" = "Kardemumma";
+"curry" = "Curry";
+"paprika_powder" = "Paprikapulver";
+"olive_oil" = "Olivolja";
+"balsamic_vinegar" = "Balsamvinäger";
+"soy_sauce" = "Sojasås";
+"honey" = "Honung";
+"mustard" = "Senap";
+
+// Kamera
+"camera_permission" = "Kameratillstånd";
+"open_settings" = "Öppna inställningar";
+"camera_permission_needed" = "Vi behöver kameratillstånd för att ta foton";
+"camera_permission_denied" = "Kameraåtkomst nekad. Du kan ändra detta i telefoninställningarna.";
+"camera_permission_error" = "Kunde inte kontrollera kameratillstånd";
+
+// Sök
+"search" = "Sök..."; 

@@ -7,12 +7,12 @@ struct ColorOption: Identifiable {
 }
 
 let colorOptions: [ColorOption] = [
-    ColorOption(name: "Sininen", hex: "#1E88E5"),
-    ColorOption(name: "Vihreä", hex: "#43A047"),
-    ColorOption(name: "Punainen", hex: "#E53935"),
-    ColorOption(name: "Oranssi", hex: "#FB8C00"),
-    ColorOption(name: "Violetti", hex: "#8E24AA"),
-    ColorOption(name: "Turkoosi", hex: "#00ACC1"),
-    ColorOption(name: "Ruskea", hex: "#6D4C41"),
-    ColorOption(name: "Harmaa", hex: "#757575")
+    ColorOption(name: "blue".localized, hex: "#1E88E5"),
+    ColorOption(name: "green".localized, hex: "#43A047"),
+    ColorOption(name: "red".localized, hex: "#E53935"),
+    ColorOption(name: "orange".localized, hex: "#FB8C00"),
+    ColorOption(name: "purple".localized, hex: "#8E24AA"),
+    ColorOption(name: "turquoise".localized, hex: "#00ACC1"),
+    ColorOption(name: "brown".localized, hex: "#6D4C41"),
+    ColorOption(name: "gray".localized, hex: "#757575")
 ] 

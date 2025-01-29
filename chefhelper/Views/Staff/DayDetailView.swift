@@ -11,22 +11,27 @@ struct DayDetailView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(timeSlots, id: \.self) { hour in
-                    let workingStaff = getWorkingStaff(at: hour)
-                    if !workingStaff.isEmpty {
-                        Section(header: Text("\(hour):00 - \(hour + 1):00")) {
-                            ForEach(workingStaff) { pair in
-                                StaffShiftRow(staff: pair.staff, shift: pair.shift)
+                if getWorkingStaff(at: timeSlots[0]).isEmpty {
+                    Text("no_shifts_for_day".localized)
+                        .foregroundColor(.gray)
+                } else {
+                    ForEach(timeSlots, id: \.self) { hour in
+                        let workingStaff = getWorkingStaff(at: hour)
+                        if !workingStaff.isEmpty {
+                            Section(header: Text("\(hour):00 - \(hour + 1):00")) {
+                                ForEach(workingStaff) { pair in
+                                    StaffShiftRow(staff: pair.staff, shift: pair.shift)
+                                }
                             }
                         }
                     }
                 }
             }
-            .navigationTitle(formatDate(date))
+            .navigationTitle("day_schedule".localized)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Valmis") {
+                    Button("done".localized) {
                         isPresented = false
                     }
                 }

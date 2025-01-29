@@ -1,0 +1,267 @@
+// Yleiset
+"settings" = "Asetukset";
+"cancel" = "Peruuta";
+"save" = "Tallenna";
+"done" = "Valmis";
+"add" = "Lisää";
+"edit" = "Muokkaa";
+"delete" = "Poista";
+"error" = "Virhe";
+"ok" = "OK";
+"unit" = "Yksikkö";
+
+// Navigaatio
+"recipes" = "Reseptit";
+"dishes" = "Annokset";
+"inventory" = "Varasto";
+"staff" = "Henkilöstö";
+
+// Asetukset
+"language" = "Kieli";
+"select_language" = "Valitse kieli";
+
+// Varasto
+"inventory_value" = "Varaston arvo:";
+"no_items" = "Ei tuotteita";
+"expiring_products" = "Vanhenevat tuotteet";
+"days_remaining" = "päivää jäljellä";
+"today" = "Tänään";
+"tomorrow" = "Huomenna";
+"expired" = "Vanhentunut";
+"select_date" = "Valitse päivä";
+
+// Kategoriat
+"all" = "Kaikki";
+"fresh" = "Tuore";
+"dry" = "Kuiva";
+"misc" = "Muut";
+"category" = "Kategoria";
+
+// Reseptit
+"no_recipes" = "Ei reseptejä";
+"no_dishes" = "Ei annoksia";
+"ingredients" = "ainesosaa";
+"components" = "komponenttia";
+"view" = "Näkymä";
+"recipe_details" = "Reseptin tiedot";
+"recipe_name" = "Reseptin nimi";
+"ingredients_title" = "Ainesosat";
+"instructions_title" = "Ohjeet";
+"add_ingredient" = "Lisää ainesosa";
+"enter_ingredient_name" = "Syötä ainesosan nimi";
+"enter_recipe_name" = "Syötä reseptin nimi";
+"enter_amount" = "Syötä määrä numeroina";
+"scaling" = "Skaalaus";
+"scaling_factor" = "Skaalauskerroin";
+"delete_recipe_confirmation" = "Haluatko varmasti poistaa reseptin?";
+"cannot_undo" = "Tätä toimintoa ei voi kumota";
+"edit_recipe" = "Muokkaa reseptiä";
+"no_ingredients" = "Ei ainesosia";
+"ingredient_not_in_inventory" = "Ainesosaa ei löydy varastosta";
+
+// Annokset
+"dish_details" = "Annoksen tiedot";
+"components_title" = "Komponentit";
+"add_component" = "Lisää komponentti";
+"add_from_recipe" = "Lisää reseptistä";
+"search_recipe" = "Hae reseptiä...";
+"not_linked_to_inventory" = "Ei linkitetty varastoon";
+"unit_conversion_impossible" = "Yksikkömuunnos ei mahdollinen";
+"sufficient_stock" = "Varastossa riittävästi";
+"insufficient_stock" = "Varastossa ei riittävästi";
+"recipe_reference" = "resepti";
+"delete_dish" = "Poista annos";
+"dish_name" = "Annoksen nimi";
+"edit_dish" = "Muokkaa annosta";
+"image" = "Kuva";
+"remove_image" = "Poista kuva";
+"take_photo" = "Ota kuva";
+"enter_dish_name" = "Syötä annoksen nimi";
+
+// Henkilöstö
+"shift_details" = "Työvuoron tiedot";
+"date" = "Päivä";
+"starts" = "Alkaa";
+"ends" = "Päättyy";
+"overlapping_shift" = "Henkilöllä on jo työvuoro tänä aikana";
+"staff_details" = "Henkilön tiedot";
+"basic_info" = "Perustiedot";
+"name" = "Nimi";
+"role" = "Rooli";
+"phone_number" = "Puhelinnumero";
+"color_code" = "Väritunnus";
+"add_staff" = "Lisää työntekijä";
+"no_shifts" = "Ei tulevia työvuoroja";
+"add_first_staff" = "Lisää ensimmäinen työntekijä painamalla + -painiketta";
+"shifts" = "Työvuorot";
+"schedule" = "Aikataulu";
+"add_shift" = "Lisää työvuoro";
+"edit_staff" = "Muokkaa työntekijää";
+
+// Sovellus
+"app_name" = "ChefHelper";
+"loading" = "Ladataan...";
+"new_recipe" = "Uusi resepti";
+"comments" = "Kommentit";
+"add_comment" = "Lisää kommentti";
+"delete_recipe" = "Poista resepti";
+
+// AddComponentView
+"component_details" = "Komponentin tiedot";
+"component_name" = "Komponentin nimi";
+"amount" = "Määrä";
+"link_to_recipe" = "Linkitä reseptiin (valinnainen)";
+"enter_component_name" = "Syötä komponentin nimi";
+"select_recipe" = "Valitse resepti";
+"new_dish" = "Uusi annos";
+
+// AddDishView
+"new_dish" = "Uusi annos";
+"delete_dish_confirmation" = "Haluatko varmasti poistaa annoksen?";
+"add_first_dish" = "Lisää ensimmäinen annos painamalla + -painiketta";
+
+// AddInventoryItemView
+"item_details" = "Tuotteen tiedot";
+"item_name" = "Tuotteen nimi";
+"price" = "Hinta";
+"expiry_date" = "Viimeinen käyttöpäivä";
+"category" = "Kategoria";
+"new_item" = "Uusi tuote";
+"enter_item_name" = "Syötä tuotteen nimi";
+"enter_price" = "Syötä hinta";
+"edit_item" = "Muokkaa tuotetta";
+
+// New additions from the code block
+"close" = "Sulje";
+"week" = "Viikko";
+"select_week" = "Valitse viikko";
+"shifts_count" = "Vuoroja";
+"time" = "Aika";
+"position" = "Tehtävä";
+"cook" = "Kokki";
+"server" = "Tarjoilija";
+"dishwasher" = "Tiskari";
+"select_staff" = "Valitse työntekijä";
+
+// New additions from the code block
+"day_schedule" = "Päivän aikataulu";
+"no_shifts_for_day" = "Ei työvuoroja tälle päivälle";
+"shift_time" = "Vuoron aika";
+"staff_count" = "Henkilöstömäärä";
+"time_range" = "Aikaväli";
+
+// New additions from the code block
+"upcoming_shifts" = "Tulevat";
+"past_shifts" = "Menneet";
+"no_upcoming_shifts" = "Ei tulevia vuoroja";
+"no_past_shifts" = "Ei menneitä vuoroja";
+"notes" = "Muistiinpanot";
+"add_note" = "Lisää muistiinpano";
+"calendar" = "Kalenteri";
+"delete_staff_confirmation" = "Haluatko varmasti poistaa työntekijän?";
+
+// New additions from the code block
+"monday_short" = "Ma";
+"tuesday_short" = "Ti";
+"wednesday_short" = "Ke";
+"thursday_short" = "To";
+"friday_short" = "Pe";
+"saturday_short" = "La";
+"sunday_short" = "Su";
+
+// New additions from the code block
+"no_components" = "Ei komponentteja";
+"all_components_available" = "Kaikki komponentit saatavilla";
+"missing_components" = "Puuttuvia komponentteja";
+
+// Roolit
+"kitchen_supervisor" = "Vuoropäällikkö (keittiö)";
+"service_supervisor" = "Vuoropäällikkö (sali)";
+"head_chef" = "Keittiömestari";
+"restaurant_manager" = "Ravintolapäällikkö";
+"cook" = "Kokki";
+"server" = "Tarjoilija";
+"dishwasher" = "Tiskari";
+
+// Yksiköt
+"gram" = "g";
+"deciliter" = "dl";
+"kilogram" = "kg";
+"liter" = "l";
+"piece" = "kpl";
+
+// Värit
+"blue" = "Sininen";
+"green" = "Vihreä";
+"red" = "Punainen";
+"orange" = "Oranssi";
+"purple" = "Violetti";
+"turquoise" = "Turkoosi";
+"brown" = "Ruskea";
+"gray" = "Harmaa";
+
+// Ainesosat
+"carrot" = "Porkkana";
+"potato" = "Peruna";
+"onion" = "Sipuli";
+"garlic" = "Valkosipuli";
+"tomato" = "Tomaatti";
+"cucumber" = "Kurkku";
+"bell_pepper" = "Paprika";
+"zucchini" = "Kesäkurpitsa";
+"eggplant" = "Munakoiso";
+"apple" = "Omena";
+"pear" = "Päärynä";
+"blueberry" = "Mustikka";
+"raspberry" = "Vadelma";
+"strawberry" = "Mansikka";
+"beef_tenderloin" = "Naudan sisäfilee";
+"pork_loin" = "Porsaan ulkofilee";
+"chicken_breast" = "Kanan rintafilee";
+"lamb_chops" = "Lampaankareet";
+"duck_breast" = "Ankanrinta";
+"salmon" = "Lohi";
+"whitefish" = "Siika";
+"perch" = "Ahven";
+"pike_perch" = "Kuha";
+"flounder" = "Kampela";
+"cream" = "Kerma";
+"milk" = "Maito";
+"butter" = "Voi";
+"mascarpone" = "Mascarpone";
+"creme_fraiche" = "Creme fraiche";
+"basil" = "Basilika";
+"thyme" = "Timjami";
+"rosemary" = "Rosmariini";
+"oregano" = "Oregano";
+"parsley" = "Persilja";
+"wheat_flour" = "Vehnäjauho";
+"rye_flour" = "Ruisjauho";
+"buckwheat_flour" = "Tattarijauho";
+"rice" = "Riisi";
+"pasta" = "Pasta";
+"black_pepper" = "Mustapippuri";
+"cinnamon" = "Kaneli";
+"cardamom" = "Kardemumma";
+"curry" = "Curry";
+"paprika_powder" = "Paprikajauhe";
+"olive_oil" = "Oliiviöljy";
+"balsamic_vinegar" = "Balsamiviinietikka";
+"soy_sauce" = "Soijakastike";
+"honey" = "Hunaja";
+"mustard" = "Sinappi";
+
+// Kamera
+"camera_permission" = "Kameran käyttöoikeus";
+"open_settings" = "Avaa asetukset";
+"camera_permission_needed" = "Tarvitsemme kameran käyttöoikeuden kuvien ottamiseen";
+"camera_permission_denied" = "Kameran käyttöoikeus on estetty. Voit muuttaa asetusta puhelimen asetuksista.";
+"camera_permission_error" = "Kameran käyttöoikeutta ei voitu tarkistaa";
+
+// Haku
+"search" = "Hae...";
+
+// New additions from the code block
+"enter_staff_name" = "Syötä työntekijän nimi";
+"enter_phone_number" = "Syötä puhelinnumero";
+"invalid_phone_number" = "Syötä kelvollinen puhelinnumero (5-15 numeroa)"; 

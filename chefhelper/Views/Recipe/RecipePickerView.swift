@@ -20,10 +20,10 @@ struct RecipePickerView: View {
                 selectedRecipe: $selectedRecipe
             )
         }
-        .navigationTitle("Valitse resepti")
+        .navigationTitle("select_recipe".localized)
         .toolbar {
             if selectedRecipe != nil {
-                Button("Lisää") {
+                Button("add".localized) {
                     addComponent()
                 }
             }
@@ -52,12 +52,12 @@ private struct AmountSection: View {
     var body: some View {
         Section {
             HStack {
-                TextField("Määrä", text: $amount)
+                TextField("amount".localized, text: $amount)
                     .keyboardType(.decimalPad)
                 
-                Picker("Yksikkö", selection: $unit) {
+                Picker("unit".localized, selection: $unit) {
                     ForEach(RecipeUnit.allCases, id: \.self) { unit in
-                        Text(unit.rawValue).tag(unit)
+                        Text(unit.localizedName).tag(unit)
                     }
                 }
                 .pickerStyle(.segmented)
@@ -95,7 +95,7 @@ private struct RecipeRow: View {
             VStack(alignment: .leading) {
                 Text(recipe.name)
                     .font(.headline)
-                Text("\(recipe.ingredients.count) raaka-ainetta")
+                Text("\(recipe.ingredients.count) \("ingredients".localized)")
                     .font(.caption)
                     .foregroundColor(.gray)
             }
@@ -104,7 +104,7 @@ private struct RecipeRow: View {
             
             if isSelected {
                 Image(systemName: "checkmark")
-                    .foregroundColor(.blue)
+                    .foregroundColor(.brown)
             }
         }
     }

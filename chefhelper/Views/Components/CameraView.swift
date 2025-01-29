@@ -20,14 +20,14 @@ struct CameraView: View {
         .task {
             await checkCameraPermission()
         }
-        .alert("Kameran käyttöoikeus", isPresented: $showingAlert) {
-            Button("Avaa asetukset") {
+        .alert("camera_permission".localized, isPresented: $showingAlert) {
+            Button("open_settings".localized) {
                 if let url = URL(string: UIApplication.openSettingsURLString) {
                     UIApplication.shared.open(url)
                 }
                 dismiss()
             }
-            Button("Peruuta", role: .cancel) {
+            Button("cancel".localized, role: .cancel) {
                 dismiss()
             }
         } message: {
@@ -47,14 +47,14 @@ struct CameraView: View {
             if granted {
                 isCameraAuthorized = true
             } else {
-                alertMessage = "Tarvitsemme kameran käyttöoikeuden kuvien ottamiseen"
+                alertMessage = "camera_permission_needed".localized
                 showingAlert = true
             }
         case .denied, .restricted:
-            alertMessage = "Kameran käyttöoikeus on estetty. Voit muuttaa asetusta puhelimen asetuksista."
+            alertMessage = "camera_permission_denied".localized
             showingAlert = true
         @unknown default:
-            alertMessage = "Kameran käyttöoikeutta ei voitu tarkistaa"
+            alertMessage = "camera_permission_error".localized
             showingAlert = true
         }
     }

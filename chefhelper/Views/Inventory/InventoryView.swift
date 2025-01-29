@@ -6,6 +6,8 @@ struct InventoryView: View {
     @Query private var items: [InventoryItem]
     @State private var selectedCategory: Category = .all
     @State private var showingAddSheet = false
+    @State private var showingSettings = false
+    @State private var selectedTab = 0
     
     var filteredItems: [InventoryItem] {
         if selectedCategory == .all {
@@ -21,57 +23,102 @@ struct InventoryView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                // Varaston kokonaisarvo
-                GroupBox {
-                    HStack {
-                        Text("Varaston arvo:")
-                            .font(.headline)
-                        Spacer()
-                        Text(String(format: "%.2f €", totalValue))
-                            .font(.headline)
-                            .foregroundColor(.brown)
-                    }
+                // Varaston arvo -palkki
+                HStack {
+                    Text("inventory_value".localized)
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                    
+                    Spacer()
+                    
+                    Text(String(format: "%.2f €", totalValue))
+                        .font(.headline)
+                        .foregroundColor(.brown)
                 }
                 .padding()
+                .frame(maxWidth: .infinity)
+                .background(Color.brown.opacity(0.1))
+                .cornerRadius(8)
+                .padding(.horizontal)
+                .padding(.top, 10)
                 
-                // Kategoria-valitsin
-                Picker("Kategoria", selection: $selectedCategory) {
-                    ForEach(Category.allCases, id: \.self) { category in
-                        Text(category.rawValue).tag(category)
-                    }
+                // Tab selection
+                Picker("", selection: $selectedTab) {
+                    Text("inventory".localized).tag(0)
+                    Text("expiring_products".localized).tag(1)
                 }
                 .pickerStyle(.segmented)
-                .padding()
+                .padding(.horizontal)
+                .padding(.top, 20)
                 
-                // Lista tuotteista
-                List {
-                    if filteredItems.isEmpty {
-                        Text("Ei tuotteita")
+                if selectedTab == 0 {
+                    // Kategoria-valitsin
+                    Picker("category".localized, selection: $selectedCategory) {
+                        ForEach(Category.allCases, id: \.self) { category in
+                            Text(category.localizedName).tag(category)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                    .padding()
+                    .padding(.horizontal)
+                    
+                    
+                    // Regular inventory list
+                    List {
+                        if filteredItems.isEmpty {
+                            Text("no_items".localized)
+                                .foregroundColor(.gray)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .listRowBackground(Color.clear)
+                        } else {
+                            ForEach(filteredItems) { item in
+                                NavigationLink(destination: EditInventoryItemView(item: item)) {
+                                    InventoryItemRow(item: item)
+                                }
+                            }
+                            .onDelete(perform: deleteItems)
+                        }
+                    }
+                    .listStyle(.insetGrouped)
+                } else {
+                    // Expiration view
+                    let itemsWithExpiry = items.filter { $0.expirationDate != nil }
+                    if itemsWithExpiry.isEmpty {
+                        Text("no_items".localized)
                             .foregroundColor(.gray)
                             .frame(maxWidth: .infinity, alignment: .center)
                             .listRowBackground(Color.clear)
+                            .padding(.top, 20)
                     } else {
-                        ForEach(filteredItems) { item in
-                            NavigationLink(destination: EditInventoryItemView(item: item)) {
-                                InventoryItemRow(item: item)
-                            }
-                        }
-                        .onDelete(perform: deleteItems)
+                        ExpirationWarningView(items: itemsWithExpiry)
                     }
+                    Spacer()
                 }
-                .listStyle(.insetGrouped)
             }
-            .navigationTitle("Varasto")
+            .navigationTitle("inventory".localized)                    
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                Button(action: { showingAddSheet = true }) {
-                    Image(systemName: "plus")
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: { showingSettings = true }) {
+                        Image(systemName: "gearshape")
+                            .foregroundColor(.brown)
+                    }
+                }
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: { showingAddSheet = true }) {
+                        Image(systemName: "plus")
+                            .foregroundColor(.brown)
+                    }
                 }
             }
             .sheet(isPresented: $showingAddSheet) {
                 NavigationStack {
                     AddInventoryItemView()
                 }
+            }
+            .sheet(isPresented: $showingSettings) {
+                SettingsView()
             }
         }
     }
@@ -81,68 +128,5 @@ struct InventoryView: View {
             modelContext.delete(filteredItems[index])
         }
         try? modelContext.save()
-    }
-}
-
-struct ExpiryListView: View {
-    let items: [InventoryItem]
-    
-    var body: some View {
-        List {
-            if items.isEmpty {
-                Text("Ei vanhenevia tuotteita")
-                    .foregroundColor(.gray)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .listRowBackground(Color.clear)
-            } else {
-                ForEach(items.sorted { $0.daysUntilExpiration ?? 0 < $1.daysUntilExpiration ?? 0 }) { item in
-                    if let days = item.daysUntilExpiration {
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text(item.name)
-                                    .font(.headline)
-                                Text("\(days) päivää jäljellä")
-                                    .font(.subheadline)
-                                    .foregroundColor(days <= 3 ? .red : .orange)
-                            }
-                            
-                            Spacer()
-                            
-                            VStack(alignment: .trailing) {
-                                Text(String(format: "%.1f %@", item.amount, item.unit.rawValue))
-                                Text(String(format: "%.2f €", item.totalValue))
-                                    .font(.caption)
-                                    .foregroundColor(.gray)
-                            }
-                        }
-                        .padding(.vertical, 4)
-                    }
-                }
-            }
-        }
-        .listStyle(InsetGroupedListStyle())
-    }
-}
-
-struct ExpirationWarningView: View {
-    let items: [InventoryItem]
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text("Vanhenevat tuotteet:")
-                .font(.headline)
-                .foregroundColor(.white)
-            
-            ForEach(items) { item in
-                if let days = item.daysUntilExpiration {
-                    Text("\(item.name) - \(days) päivää jäljellä")
-                        .font(.subheadline)
-                        .foregroundColor(.white)
-                }
-            }
-        }
-        .padding()
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color.red.opacity(0.8))
     }
 }

@@ -31,17 +31,17 @@ struct EditDishView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section(header: Text("Annoksen tiedot")) {
-                    TextField("Nimi", text: $name)
+                Section(header: Text("dish_details".localized)) {
+                    TextField("dish_name".localized, text: $name)
                 }
                 
-                Section(header: Text("Komponentit")) {
+                Section(header: Text("components_title".localized)) {
                     ForEach(components) { component in
                         VStack(alignment: .leading) {
                             HStack {
                                 if let recipe = component.getRecipe(context: modelContext) {
-                                    Text("\(recipe.name) (resepti)")
-                                        .foregroundStyle(.blue)
+                                    Text("\(recipe.name) (\("recipe_reference".localized))")
+                                        .foregroundStyle(.brown)
                                 } else {
                                     Text(component.name)
                                 }
@@ -59,24 +59,24 @@ struct EditDishView: View {
                     .onDelete(perform: deleteComponents)
                     
                     HStack {
-                        Button("Lisää komponentti") {
+                        Button("add_component".localized) {
                             showingAddComponent = true
                         }
                         
                         Spacer()
                         
-                        Button("Lisää reseptistä") {
+                        Button("add_from_recipe".localized) {
                             showingRecipePicker = true
                         }
                     }
                 }
                 
-                Section(header: Text("Valmistusohje")) {
+                Section(header: Text("instructions_title".localized)) {
                     TextEditor(text: $instructions)
                         .frame(minHeight: 100)
                 }
                 
-                Section(header: Text("Kuva")) {
+                Section(header: Text("image".localized)) {
                     if let imageData = imageData, let uiImage = UIImage(data: imageData) {
                         VStack {
                             Image(uiImage: uiImage)
@@ -85,35 +85,27 @@ struct EditDishView: View {
                                 .frame(maxHeight: 200)
                             
                             Button(role: .destructive) {
-                                $imageData.wrappedValue = nil
+                                self.imageData = nil
                             } label: {
-                                Label("Poista kuva", systemImage: "trash")
+                                Text("remove_image".localized)
                                     .foregroundColor(.red)
                             }
                         }
                     }
                     
-                    HStack {
-                        Button(action: { showingCamera = true }) {
-                            Label("Ota kuva", systemImage: "camera")
-                        }
-                        
-                        Spacer()
-                        
-                        PhotosPicker(selection: $selectedImage, matching: .images) {
-                            Label("Valitse kuva", systemImage: "photo")
-                        }
+                    Button("take_photo".localized) {
+                        showingCamera = true
                     }
                 }
             }
-            .navigationTitle("Muokkaa annosta")
+            .navigationTitle("edit_dish".localized)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Peruuta") { dismiss() }
+                    Button("cancel".localized) { dismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Tallenna") { saveDish() }
+                    Button("save".localized) { saveDish() }
                 }
             }
             .sheet(isPresented: $showingAddComponent) {
@@ -129,8 +121,8 @@ struct EditDishView: View {
                     RecipePickerView(components: $components)
                 }
             }
-            .alert("Virhe", isPresented: $showingAlert) {
-                Button("OK", role: .cancel) { }
+            .alert("error".localized, isPresented: $showingAlert) {
+                Button("ok".localized, role: .cancel) { }
             } message: {
                 Text(alertMessage)
             }
@@ -154,7 +146,7 @@ struct EditDishView: View {
     
     private func saveDish() {
         guard !name.isEmpty else {
-            alertMessage = "Syötä annoksen nimi"
+            alertMessage = "enter_dish_name".localized
             showingAlert = true
             return
         }

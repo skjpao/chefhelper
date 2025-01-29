@@ -1,44 +1,65 @@
 import SwiftUI
 
 struct WeekScheduleView: View {
+    @Environment(\.dismiss) private var dismiss
     @Binding var selectedWeek: Date
     let staff: [Staff]
     @State private var selectedDate: Date?
     @State private var showingMonthPicker = false
     
-    private let weekDays = ["Ma", "Ti", "Ke", "To", "Pe", "La", "Su"]
+    private let weekDays = ["monday_short".localized, "tuesday_short".localized, 
+                           "wednesday_short".localized, "thursday_short".localized, 
+                           "friday_short".localized, "saturday_short".localized, 
+                           "sunday_short".localized]
     private let timeSlots = Array(6...24)
     private let visibleTimeSlots = Array(9...22) // Default visible hours
     
+    private var weekNumber: Int {
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.weekOfYear], from: selectedWeek)
+        return components.weekOfYear ?? 0
+    }
+    
     var body: some View {
-        VStack {
-            // Week navigation
-            HStack {
-                Button(action: previousWeek) {
-                    Image(systemName: "chevron.left")
-                        .foregroundColor(.brown)
-                }
+        VStack(spacing: 0) {
+            // Week navigation with week number
+            HStack(spacing: 16) {
+                // Viikkonumero
+                Text("\("week".localized) \(weekNumber)")
+                    .font(.headline)
+                    .foregroundColor(.brown)
+                    .padding(.leading)
                 
-                Button(action: { showingMonthPicker = true }) {
-                    Text(weekString(from: selectedWeek))
-                        .font(.headline)
-                        .foregroundColor(.brown)
+                // Week navigation
+                HStack {
+                    Button(action: previousWeek) {
+                        Image(systemName: "chevron.left")
+                            .foregroundColor(.brown)
+                    }
+                    
+                    Button(action: { showingMonthPicker = true }) {
+                        Text(weekString(from: selectedWeek))
+                            .font(.headline)
+                            .foregroundColor(.brown)
+                    }
+                    
+                    Button(action: nextWeek) {
+                        Image(systemName: "chevron.right")
+                            .foregroundColor(.brown)
+                    }
                 }
-                
-                Button(action: nextWeek) {
-                    Image(systemName: "chevron.right")
-                        .foregroundColor(.brown)
-                }
+                .padding(.trailing)
             }
-            .padding(.vertical)
+            .padding(.vertical, 8)
             
+            // Kalenteri
             ScrollView(.horizontal, showsIndicators: false) {
                 VStack {
                     // Header row with dates
                     HStack(alignment: .top, spacing: 1) {
                         // Time column
                         VStack(alignment: .leading) {
-                            Text("Aika")
+                            Text("time".localized)
                                 .font(.caption.bold())
                                 .frame(width: 50)
                         }
@@ -62,7 +83,7 @@ struct WeekScheduleView: View {
                     // Time slots with shifts
                     ScrollView(.vertical, showsIndicators: true) {
                         ZStack {
-                            // Tuntien ruudukko
+                            // Tuntien ruudukko -> Hours grid
                             VStack(spacing: 1) {
                                 ForEach(timeSlots, id: \.self) { hour in
                                     HStack(spacing: 1) {
@@ -78,7 +99,7 @@ struct WeekScheduleView: View {
                                 }
                             }
                             
-                            // Vuorot päällekkäin ruudukon kanssa
+                            // Vuorot päällekkäin ruudukon kanssa -> Shifts overlaid on grid
                             HStack(spacing: 1) {
                                 Rectangle()
                                     .fill(Color.clear)
@@ -107,6 +128,7 @@ struct WeekScheduleView: View {
                 .padding()
             }
         }
+        .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showingMonthPicker) {
             MonthCalendarView(selectedWeek: $selectedWeek)
         }
@@ -185,6 +207,13 @@ struct WeekScheduleView: View {
         if let newDate = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: selectedWeek) {
             selectedWeek = newDate
         }
+    }
+    
+    private func formatDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d.M.yyyy"
+        formatter.locale = Locale(identifier: "fi_FI")
+        return formatter.string(from: date)
     }
 }
 

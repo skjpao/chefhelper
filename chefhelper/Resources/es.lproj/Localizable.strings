@@ -1,0 +1,258 @@
+// General
+"settings" = "Ajustes";
+"cancel" = "Cancelar";
+"save" = "Guardar";
+"done" = "Hecho";
+"add" = "Añadir";
+"edit" = "Editar";
+"delete" = "Eliminar";
+"error" = "Error";
+"ok" = "OK";
+"unit" = "Unidad";
+
+// Navegación
+"recipes" = "Recetas";
+"dishes" = "Platos";
+"inventory" = "Inventario";
+"staff" = "Personal";
+
+// Ajustes
+"language" = "Idioma";
+"select_language" = "Seleccionar idioma";
+
+// Inventario
+"inventory_value" = "Valor del inventario:";
+"no_items" = "Sin artículos";
+"expiring_products" = "Productos a caducar";
+"days_remaining" = "días restantes";
+"today" = "Hoy";
+"tomorrow" = "Mañana";
+"expired" = "Caducado";
+"select_date" = "Seleccionar fecha";
+
+// Categorías
+"all" = "Todo";
+"fresh" = "Fresco";
+"dry" = "Seco";
+"misc" = "Varios";
+"category" = "Categoría";
+
+// Personal
+"shift_details" = "Detalles del turno";
+"date" = "Fecha";
+"starts" = "Comienza";
+"ends" = "Termina";
+"overlapping_shift" = "La persona ya tiene un turno durante este tiempo";
+"staff_details" = "Detalles del empleado";
+"basic_info" = "Información básica";
+"name" = "Nombre";
+"role" = "Rol";
+"phone_number" = "Número de teléfono";
+"color_code" = "Código de color";
+"add_staff" = "Añadir empleado";
+"no_shifts" = "Sin turnos próximos";
+"add_first_staff" = "Añade el primer empleado pulsando el botón +";
+"shifts" = "Turnos";
+"schedule" = "Horario";
+"add_shift" = "Añadir turno";
+"edit_staff" = "Editar empleado";
+
+// Roles
+"kitchen_supervisor" = "Supervisor de cocina";
+"service_supervisor" = "Supervisor de servicio";
+"head_chef" = "Chef ejecutivo";
+"restaurant_manager" = "Gerente de restaurante";
+"cook" = "Cocinero";
+"server" = "Camarero";
+"dishwasher" = "Lavaplatos";
+
+// Unidades
+"gram" = "g";
+"deciliter" = "dl";
+"kilogram" = "kg";
+"liter" = "l";
+"piece" = "ud";
+
+// Validación
+"enter_staff_name" = "Introduce el nombre del empleado";
+"enter_phone_number" = "Introduce el número de teléfono";
+"invalid_phone_number" = "Introduce un número de teléfono válido (5-15 dígitos)";
+
+// Turnos
+"upcoming_shifts" = "Próximos";
+"past_shifts" = "Pasados";
+"no_upcoming_shifts" = "Sin turnos próximos";
+"no_past_shifts" = "Sin turnos pasados";
+"delete_staff_confirmation" = "¿Estás seguro de que quieres eliminar este empleado?";
+"cannot_undo" = "Esta acción no se puede deshacer";
+
+// Recetas
+"no_recipes" = "Sin recetas";
+"no_dishes" = "Sin platos";
+"ingredients" = "ingredientes";
+"components" = "componentes";
+"view" = "Ver";
+"recipe_details" = "Detalles de la receta";
+"recipe_name" = "Nombre de la receta";
+"ingredients_title" = "Ingredientes";
+"instructions_title" = "Instrucciones";
+"add_ingredient" = "Añadir ingrediente";
+"enter_ingredient_name" = "Introducir nombre del ingrediente";
+"enter_amount" = "Introducir cantidad en números";
+"scaling" = "Escalar";
+"scaling_factor" = "Factor de escala";
+"delete_recipe_confirmation" = "¿Estás seguro de que quieres eliminar esta receta?";
+"edit_recipe" = "Editar receta";
+"new_recipe" = "Nueva receta";
+"no_ingredients" = "Sin ingredientes";
+"ingredient_not_in_inventory" = "Ingrediente no encontrado en inventario";
+
+// Platos
+"dish_details" = "Detalles del plato";
+"components_title" = "Componentes";
+"add_component" = "Añadir componente";
+"add_from_recipe" = "Añadir desde receta";
+"search_recipe" = "Buscar receta...";
+"not_linked_to_inventory" = "No vinculado al inventario";
+"unit_conversion_impossible" = "Conversión de unidad no posible";
+"sufficient_stock" = "Stock suficiente";
+"insufficient_stock" = "Stock insuficiente";
+"recipe_reference" = "receta";
+"delete_dish" = "Eliminar plato";
+"dish_name" = "Nombre del plato";
+"edit_dish" = "Editar plato";
+"image" = "Imagen";
+"remove_image" = "Eliminar imagen";
+"take_photo" = "Tomar foto";
+
+// Aplicación
+"app_name" = "ChefHelper";
+"loading" = "Cargando...";
+
+// Comentarios
+"comments" = "Comentarios";
+"add_comment" = "Añadir comentario";
+"delete_recipe" = "Eliminar receta";
+"enter_dish_name" = "Introducir nombre del plato";
+"component_details" = "Detalles del componente";
+"component_name" = "Nombre del componente";
+"amount" = "Cantidad";
+"link_to_recipe" = "Vincular a receta (opcional)";
+"enter_component_name" = "Introducir nombre del componente";
+"select_recipe" = "Seleccionar receta";
+"new_dish" = "Nuevo plato";
+"delete_dish_confirmation" = "¿Estás seguro de que quieres eliminar este plato?";
+"add_first_dish" = "Añade tu primer plato pulsando el botón +";
+
+// Artículos de inventario
+"item_details" = "Detalles del artículo";
+"item_name" = "Nombre del artículo";
+"price" = "Precio";
+"expiry_date" = "Fecha de caducidad";
+"new_item" = "Nuevo artículo";
+"enter_item_name" = "Introducir nombre del artículo";
+"enter_recipe_name" = "Introducir nombre de la receta";
+"enter_price" = "Introducir precio";
+"edit_item" = "Editar artículo";
+"close" = "Cerrar";
+
+// Horario
+"calendar" = "Calendario";
+"week" = "Semana";
+"select_week" = "Seleccionar semana";
+"shifts_count" = "Número de turnos";
+"time" = "Hora";
+"position" = "Posición";
+"select_staff" = "Seleccionar personal";
+"day_schedule" = "Horario diario";
+"no_shifts_for_day" = "Sin turnos para este día";
+"shift_time" = "Hora del turno";
+"staff_count" = "Cantidad de personal";
+"time_range" = "Rango de tiempo";
+"notes" = "Notas";
+"add_note" = "Añadir nota";
+
+// Días de la semana
+"monday_short" = "Lun";
+"tuesday_short" = "Mar";
+"wednesday_short" = "Mié";
+"thursday_short" = "Jue";
+"friday_short" = "Vie";
+"saturday_short" = "Sáb";
+"sunday_short" = "Dom";
+
+// Componentes
+"no_components" = "Sin componentes";
+"all_components_available" = "Todos los componentes disponibles";
+"missing_components" = "Componentes faltantes";
+
+// Colores
+"blue" = "Azul";
+"green" = "Verde";
+"red" = "Rojo";
+"orange" = "Naranja";
+"purple" = "Morado";
+"turquoise" = "Turquesa";
+"brown" = "Marrón";
+"gray" = "Gris";
+
+// Ingredientes
+"carrot" = "Zanahoria";
+"potato" = "Patata";
+"onion" = "Cebolla";
+"garlic" = "Ajo";
+"tomato" = "Tomate";
+"cucumber" = "Pepino";
+"bell_pepper" = "Pimiento";
+"zucchini" = "Calabacín";
+"eggplant" = "Berenjena";
+"apple" = "Manzana";
+"pear" = "Pera";
+"blueberry" = "Arándano";
+"raspberry" = "Frambuesa";
+"strawberry" = "Fresa";
+"beef_tenderloin" = "Solomillo de ternera";
+"pork_loin" = "Lomo de cerdo";
+"chicken_breast" = "Pechuga de pollo";
+"lamb_chops" = "Chuletas de cordero";
+"duck_breast" = "Pechuga de pato";
+"salmon" = "Salmón";
+"whitefish" = "Pescado blanco";
+"perch" = "Perca";
+"pike_perch" = "Lucioperca";
+"flounder" = "Platija";
+"cream" = "Nata";
+"milk" = "Leche";
+"butter" = "Mantequilla";
+"mascarpone" = "Mascarpone";
+"creme_fraiche" = "Crème fraîche";
+"basil" = "Albahaca";
+"thyme" = "Tomillo";
+"rosemary" = "Romero";
+"oregano" = "Orégano";
+"parsley" = "Perejil";
+"wheat_flour" = "Harina de trigo";
+"rye_flour" = "Harina de centeno";
+"buckwheat_flour" = "Harina de alforfón";
+"rice" = "Arroz";
+"pasta" = "Pasta";
+"black_pepper" = "Pimienta negra";
+"cinnamon" = "Canela";
+"cardamom" = "Cardamomo";
+"curry" = "Curry";
+"paprika_powder" = "Pimentón";
+"olive_oil" = "Aceite de oliva";
+"balsamic_vinegar" = "Vinagre balsámico";
+"soy_sauce" = "Salsa de soja";
+"honey" = "Miel";
+"mustard" = "Mostaza";
+
+// Cámara
+"camera_permission" = "Permiso de cámara";
+"open_settings" = "Abrir ajustes";
+"camera_permission_needed" = "Necesitamos permiso de cámara para tomar fotos";
+"camera_permission_denied" = "Acceso a la cámara denegado. Puedes cambiarlo en los ajustes del teléfono.";
+"camera_permission_error" = "No se pudo verificar el permiso de la cámara";
+
+// Búsqueda
+"search" = "Buscar..."; 

@@ -8,11 +8,11 @@ struct StaffRowView: View {
             Text(person.name)
                 .font(.headline)
                 .foregroundColor(.brown)
-            Text(person.role.rawValue)
+            Text(person.role.localized)
                 .font(.subheadline)
                 .foregroundColor(.gray)
             if !person.schedule.isEmpty {
-                Text("Vuoroja: \(person.schedule.count)")
+                Text("shifts_count".localized + ": \(person.schedule.count)")
                     .font(.caption)
                     .foregroundColor(.gray)
             }

@@ -11,7 +11,7 @@ struct StaffShiftRow: View {
                 .frame(width: 8, height: 8)
             Text(staff.name)
                 .foregroundColor(.primary)
-            Text(shift.position)
+            Text(shift.position.localized)
                 .foregroundColor(.gray)
             Spacer()
             Text("\(formatTime(shift.startTime)) - \(formatTime(shift.endTime))")

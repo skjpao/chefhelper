@@ -18,21 +18,31 @@ struct DishListView: View {
         List {
             SearchBarView(text: $searchText)
             
-            ForEach(filteredDishes) { dish in
-                NavigationLink(destination: DishDetailView(dish: dish)) {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(dish.name)
-                            .font(.headline)
+            if dishes.isEmpty {
+                ContentUnavailableView {
+                    Label("no_dishes".localized, systemImage: "fork.knife")
+                } description: {
+                    Text("add_first_dish".localized)
+                }
+            } else {
+                ForEach(filteredDishes) { dish in
+                    NavigationLink(value: dish) {
+                        VStack(alignment: .leading) {
+                            Text(dish.name)
+                                .font(.headline)
+                            Text("\(dish.components.count) \("components".localized)")
+                                .font(.caption)
+                                .foregroundColor(.gray)
+                        }
                     }
                 }
+                .onDelete(perform: deleteDishes)
             }
-            .onDelete(perform: deleteDishes)
         }
-        .navigationTitle("Annokset")
+        .navigationTitle("dishes".localized)
         .toolbar {
             Button(action: { showingAddSheet = true }) {
-                Label("Lisää annos", systemImage: "plus")
-                    .foregroundColor(.brown)
+                Image(systemName: "plus")
             }
         }
         .sheet(isPresented: $showingAddSheet) {

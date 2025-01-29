@@ -14,15 +14,15 @@ struct RecipeDetailView: View {
         ScrollView {
             VStack(spacing: 20) {
                 // Recipe details section
-                GroupBox(label: Label("Reseptin tiedot", systemImage: "list.bullet")) {
+                GroupBox(label: Label("recipe_details".localized, systemImage: "list.bullet")) {
                     VStack(alignment: .leading, spacing: 15) {
                         Text(recipe.name)
                             .font(.title2)
                             .bold()
                         
-                        Text("Ainesosat:")
+                        Text("ingredients_title".localized + ":")
                             .font(.headline)
-                        Section(header: Text("Ainesosat")) {
+                        Section(header: Text("ingredients_title".localized)) {
                             let ingredients = recipe.ingredients
                             ForEach(ingredients) { ingredient in
                                 HStack {
@@ -34,7 +34,7 @@ struct RecipeDetailView: View {
                             }
                         }
                         
-                        Text("Ohjeet:")
+                        Text("instructions_title".localized + ":")
                             .font(.headline)
                         Text(recipe.instructions)
                             .padding(.leading)
@@ -43,9 +43,9 @@ struct RecipeDetailView: View {
                 }
                 
                 // Scaling section
-                GroupBox(label: Label("Skaalaus", systemImage: "arrow.up.right.and.arrow.down.left.rectangle")) {
+                GroupBox(label: Label("scaling".localized, systemImage: "arrow.up.right.and.arrow.down.left.rectangle")) {
                     VStack(alignment: .leading, spacing: 10) {
-                        TextField("Skaalauskerroin", text: $scalingFactor)
+                        TextField("scaling_factor".localized, text: $scalingFactor)
                             .keyboardType(.decimalPad)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                         
@@ -61,9 +61,9 @@ struct RecipeDetailView: View {
                 }
                 
                 // Comments section
-                GroupBox(label: Label("Kommentit", systemImage: "text.bubble")) {
+                GroupBox(label: Label("comments".localized, systemImage: "text.bubble")) {
                     VStack(alignment: .leading, spacing: 10) {
-                        ForEach(Array(recipe.comments.enumerated()), id: \ .element) { index, comment in
+                        ForEach(Array(recipe.comments.enumerated()), id: \.element) { index, comment in
                             HStack {
                                 Text("• \(comment)")
                                 Spacer()
@@ -75,22 +75,22 @@ struct RecipeDetailView: View {
                         }
                         
                         HStack {
-                            TextField("Lisää kommentti", text: $newComment)
+                            TextField("add_comment".localized, text: $newComment)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                             Button(action: addComment) {
                                 Image(systemName: "plus.circle.fill")
-                                    .foregroundColor(.blue)
+                                    .foregroundColor(.brown)
                             }
                         }
                     }
                     .padding()
                 }
                 
-                // Delete button at bottom
+                // Delete button
                 Button(role: .destructive, action: { showingDeleteAlert = true }) {
                     HStack {
                         Image(systemName: "trash")
-                        Text("Poista resepti")
+                        Text("delete_recipe".localized)
                     }
                     .frame(maxWidth: .infinity)
                     .padding()
@@ -98,22 +98,21 @@ struct RecipeDetailView: View {
                     .foregroundColor(.red)
                     .cornerRadius(10)
                 }
-                .padding(.horizontal)
             }
             .padding()
         }
         .navigationTitle(recipe.name)
         .confirmationDialog(
-            "Haluatko varmasti poistaa reseptin?",
+            "delete_recipe_confirmation".localized,
             isPresented: $showingDeleteAlert,
             titleVisibility: .visible
         ) {
-            Button("Poista", role: .destructive) {
+            Button("delete".localized, role: .destructive) {
                 deleteRecipe()
             }
-            Button("Peruuta", role: .cancel) { }
+            Button("cancel".localized, role: .cancel) { }
         } message: {
-            Text("Tätä toimintoa ei voi kumota")
+            Text("cannot_undo".localized)
         }
     }
     

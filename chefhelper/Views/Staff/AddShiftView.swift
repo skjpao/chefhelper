@@ -20,11 +20,11 @@ struct AddShiftView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Työvuoron tiedot")) {
-                    DatePicker("Päivä", selection: $date, displayedComponents: .date)
+                Section(header: Text("shift_details".localized)) {
+                    DatePicker("date".localized, selection: $date, displayedComponents: .date)
                     
                     HStack {
-                        Text("Alkaa")
+                        Text("starts".localized)
                         Spacer()
                         Picker("", selection: $startHour) {
                             ForEach(hours, id: \.self) { hour in
@@ -42,7 +42,7 @@ struct AddShiftView: View {
                     }
                     
                     HStack {
-                        Text("Päättyy")
+                        Text("ends".localized)
                         Spacer()
                         Picker("", selection: $endHour) {
                             ForEach(hours, id: \.self) { hour in
@@ -60,69 +60,61 @@ struct AddShiftView: View {
                     }
                 }
             }
-            .navigationTitle("Lisää työvuoro")
+            .navigationTitle("add_shift".localized)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Peruuta") {
+                    Button("cancel".localized) {
                         dismiss()
                     }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Lisää") {
+                    Button("add".localized) {
                         addShift()
                     }
                 }
             }
         }
         .alert(alertMessage, isPresented: $showingAlert) {
-            Button("OK", role: .cancel) { }
+            Button("ok".localized, role: .cancel) { }
         }
     }
     
     private func hasOverlappingShift() -> Bool {
         let calendar = Calendar.current
         
-        // Set start time
         var startComponents = calendar.dateComponents([.year, .month, .day], from: date)
         startComponents.hour = startHour
         startComponents.minute = startMinute
         let newStartTime = calendar.date(from: startComponents) ?? date
         
-        // Set end time
         var endComponents = calendar.dateComponents([.year, .month, .day], from: date)
         endComponents.hour = endHour
         endComponents.minute = endMinute
         let newEndTime = calendar.date(from: endComponents) ?? date
         
-        // Check for overlapping shifts
         return staff.schedule.contains { existingShift in
             let shiftDate = calendar.startOfDay(for: existingShift.date)
             let newDate = calendar.startOfDay(for: date)
             
-            // If not the same day, no overlap
             guard shiftDate == newDate else { return false }
-            
-            // Check if times overlap
             return (newStartTime < existingShift.endTime && newEndTime > existingShift.startTime)
         }
     }
     
     private func addShift() {
         if hasOverlappingShift() {
-            alertMessage = "Henkilöllä on jo työvuoro tänä aikana"
+            alertMessage = "overlapping_shift".localized
             showingAlert = true
             return
         }
         
         var components = Calendar.current.dateComponents([.year, .month, .day], from: date)
         
-        // Set start time
         components.hour = startHour
         components.minute = startMinute
         let startTime = Calendar.current.date(from: components) ?? date
         
-        // Set end time
         components.hour = endHour
         components.minute = endMinute
         let endTime = Calendar.current.date(from: components) ?? date
@@ -131,7 +123,7 @@ struct AddShiftView: View {
             date: date,
             startTime: startTime,
             endTime: endTime,
-            position: staff.role.rawValue
+            position: staff.role
         )
         staff.schedule.append(shift)
         dismiss()

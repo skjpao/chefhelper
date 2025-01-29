@@ -30,14 +30,14 @@ struct AddComponentView: View {
     
     var body: some View {
         let mainContent = Form {
-            Section {
-                TextField("Nimi", text: $name)
+            Section(header: Text("component_details".localized)) {
+                TextField("component_name".localized, text: $name)
                 
                 HStack {
-                    TextField("Määrä", text: $amount)
+                    TextField("amount".localized, text: $amount)
                         .keyboardType(.decimalPad)
                     
-                    Picker("Yksikkö", selection: $selectedUnit) {
+                    Picker("unit".localized, selection: $selectedUnit) {
                         ForEach(RecipeUnit.allCases, id: \.self) { unit in
                             Text(unit.rawValue).tag(unit)
                         }
@@ -46,8 +46,8 @@ struct AddComponentView: View {
                 }
             }
             
-            Section(header: Text("Linkitä reseptiin (valinnainen)")) {
-                TextField("Hae reseptiä...", text: $searchText)
+            Section(header: Text("link_to_recipe".localized)) {
+                TextField("search_recipe".localized, text: $searchText)
                 
                 ForEach(filteredRecipes) { recipe in
                     HStack {
@@ -71,18 +71,18 @@ struct AddComponentView: View {
                 }
             }
         }
-        .navigationTitle("Lisää komponentti")
+        .navigationTitle("add_component".localized)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
-                Button("Peruuta") { dismiss() }
+                Button("cancel".localized) { dismiss() }
             }
             ToolbarItem(placement: .confirmationAction) {
-                Button("Lisää") { addComponent() }
+                Button("add".localized) { addComponent() }
             }
         }
-        .alert("Virhe", isPresented: $showingAlert) {
-            Button("OK", role: .cancel) { }
+        .alert("error".localized, isPresented: $showingAlert) {
+            Button("ok".localized, role: .cancel) { }
         } message: {
             Text(alertMessage)
         }
@@ -98,13 +98,13 @@ struct AddComponentView: View {
     
     private func addComponent() {
         guard !name.isEmpty else {
-            alertMessage = "Syötä komponentin nimi"
+            alertMessage = "enter_component_name".localized
             showingAlert = true
             return
         }
         
         guard let amountValue = Double(amount.replacingOccurrences(of: ",", with: ".")) else {
-            alertMessage = "Syötä määrä numeroina"
+            alertMessage = "enter_amount".localized
             showingAlert = true
             return
         }

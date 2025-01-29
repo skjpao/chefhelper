@@ -26,6 +26,7 @@ struct chefhelperApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .withLanguageManager()
         }
         .modelContainer(container)
     }

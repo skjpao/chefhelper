@@ -8,14 +8,15 @@ struct StaffView: View {
     @State private var selectedWeek = Date()
     @State private var showingAddStaff = false
     @State private var selectedStaff: Staff?
+    @State private var showingSettings = false
     
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
                 // Tab selection
-                Picker("Näkymä", selection: $selectedTab) {
-                    Text("Kalenteri").tag(0)
-                    Text("Työntekijät").tag(1)
+                Picker("view".localized, selection: $selectedTab) {
+                    Text("calendar".localized).tag(0)
+                    Text("staff".localized).tag(1)
                 }
                 .pickerStyle(.segmented)
                 .padding()
@@ -28,7 +29,7 @@ struct StaffView: View {
                     // Staff list view
                     List {
                         if staff.isEmpty {
-                            Text("Ei henkilöstöä")
+                            Text("add_first_staff".localized)
                                 .foregroundColor(.gray)
                                 .frame(maxWidth: .infinity, alignment: .center)
                                 .listRowBackground(Color.clear)
@@ -45,13 +46,22 @@ struct StaffView: View {
                     }
                 }
             }
-            .navigationTitle("Henkilöstö")
+            .navigationTitle("staff".localized)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                if selectedTab == 1 {
-                    Button(action: { showingAddStaff = true }) {
-                        Label("Lisää työntekijä", systemImage: "person.badge.plus")
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: { showingSettings = true }) {
+                        Image(systemName: "gearshape")
                             .foregroundColor(.brown)
+                    }
+                }
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    if selectedTab == 1 {
+                        Button(action: { showingAddStaff = true }) {
+                            Label("add_staff".localized, systemImage: "person.badge.plus")
+                        }
+                        .tint(.brown)
                     }
                 }
             }
@@ -60,6 +70,9 @@ struct StaffView: View {
             }
             .sheet(item: $selectedStaff) { staff in
                 EditStaffView(staff: staff)
+            }
+            .sheet(isPresented: $showingSettings) {
+                SettingsView()
             }
         }
     }

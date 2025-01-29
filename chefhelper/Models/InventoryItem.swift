@@ -1,5 +1,6 @@
 import Foundation
 import SwiftData
+import SwiftUI
 
 @Model
 class InventoryItem {
@@ -21,10 +22,11 @@ class InventoryItem {
         guard let expirationDate = expirationDate else { return nil }
         let calendar = Calendar.current
         
-        let startOfToday = calendar.startOfDay(for: Date())
-        let startOfExpiration = calendar.startOfDay(for: expirationDate)
+        let now = Date()
+        let today = calendar.startOfDay(for: now)
+        let expiration = calendar.startOfDay(for: expirationDate)
         
-        let components = calendar.dateComponents([.day], from: startOfToday, to: startOfExpiration)
+        let components = calendar.dateComponents([.day], from: today, to: expiration)
         return components.day
     }
     
@@ -33,15 +35,16 @@ class InventoryItem {
         
         switch days {
         case 0:
-            return "tänään"
+            return "today".localized
         case 1:
-            return "huomenna"
+            return "tomorrow".localized
         case ..<0:
-            return "vanhentunut"
+            return "expired".localized
         default:
-            return "\(days) päivää"
+            return "\(days) \("days_remaining".localized)"
         }
     }
+    
     
     var isNearExpiration: Bool {
         guard let days = daysUntilExpiration else { return false }

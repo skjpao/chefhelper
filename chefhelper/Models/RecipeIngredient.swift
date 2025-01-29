@@ -4,7 +4,7 @@ import SwiftData
 class RecipeIngredient {
     var name: String
     var amount: Double
-    var unit: String // Tämä on String koska se on vain näyttöä varten
+    var unit: RecipeUnit
     var inventoryItem: InventoryItem?
     
     var cost: Double {
@@ -12,7 +12,7 @@ class RecipeIngredient {
         return (amount / item.amount) * item.price
     }
     
-    init(name: String, amount: Double, unit: String, inventoryItem: InventoryItem? = nil) {
+    init(name: String, amount: Double, unit: RecipeUnit, inventoryItem: InventoryItem? = nil) {
         self.name = name
         self.amount = amount
         self.unit = unit

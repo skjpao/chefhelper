@@ -7,21 +7,23 @@ struct RecipeListView: View {
     @Query(sort: \Dish.name) private var dishes: [Dish]
     @State private var selectedTab = 0
     @State private var showingAddSheet = false
+    @State private var showingSettings = false
     
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                Picker("Näkymä", selection: $selectedTab) {
-                    Text("Reseptit").tag(0)
-                    Text("Annokset").tag(1)
+                Picker("view".localized, selection: $selectedTab) {
+                    Text("recipes".localized).tag(0)
+                    Text("dishes".localized).tag(1)
                 }
                 .pickerStyle(.segmented)
                 .padding()
+                .background(Color.brown.opacity(0.1))
                 
                 List {
                     if selectedTab == 0 {
                         if recipes.isEmpty {
-                            Text("Ei reseptejä")
+                            Text("no_recipes".localized)
                                 .foregroundColor(.gray)
                                 .frame(maxWidth: .infinity, alignment: .center)
                                 .listRowBackground(Color.clear)
@@ -32,7 +34,7 @@ struct RecipeListView: View {
                                         Text(recipe.name)
                                             .font(.system(.headline, design: .rounded))
                                             .foregroundColor(.brown)
-                                        Text("\(recipe.ingredients.count) ainesosaa")
+                                        Text("\(recipe.ingredients.count) \("ingredients".localized)")
                                             .font(.system(.subheadline, design: .rounded))
                                             .foregroundColor(.gray)
                                     }
@@ -43,7 +45,7 @@ struct RecipeListView: View {
                         }
                     } else {
                         if dishes.isEmpty {
-                            Text("Ei annoksia")
+                            Text("no_dishes".localized)
                                 .foregroundColor(.gray)
                                 .frame(maxWidth: .infinity, alignment: .center)
                                 .listRowBackground(Color.clear)
@@ -54,7 +56,7 @@ struct RecipeListView: View {
                                         Text(dish.name)
                                             .font(.system(.headline, design: .rounded))
                                             .foregroundColor(.brown)
-                                        Text("\(dish.components.count) komponenttia")
+                                        Text("\(dish.components.count) \("components".localized)")
                                             .font(.system(.subheadline, design: .rounded))
                                             .foregroundColor(.gray)
                                     }
@@ -67,11 +69,21 @@ struct RecipeListView: View {
                 }
                 .listStyle(.insetGrouped)
             }
-            .navigationTitle(selectedTab == 0 ? "Reseptit" : "Annokset")
+            .navigationTitle(selectedTab == 0 ? "recipes".localized : "dishes".localized)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                Button(action: { showingAddSheet = true }) {
-                    Image(systemName: "plus")
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: { showingSettings = true }) {
+                        Image(systemName: "gearshape")
+                            .foregroundColor(.brown)
+                    }
+                }
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: { showingAddSheet = true }) {
+                        Image(systemName: "plus")
+                            .foregroundColor(.brown)
+                    }
                 }
             }
             .sheet(isPresented: $showingAddSheet) {
@@ -84,6 +96,9 @@ struct RecipeListView: View {
                         AddDishView()
                     }
                 }
+            }
+            .sheet(isPresented: $showingSettings) {
+                SettingsView()
             }
         }
     }

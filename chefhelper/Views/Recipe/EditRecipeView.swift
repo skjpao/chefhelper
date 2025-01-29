@@ -4,6 +4,7 @@ import SwiftData
 struct EditRecipeView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
+    @Query private var inventoryItems: [InventoryItem]
     @Bindable var recipe: Recipe
     
     @State private var name: String
@@ -25,11 +26,11 @@ struct EditRecipeView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Reseptin nimi")) {
-                    TextField("Nimi", text: $name)
+                Section(header: Text("recipe_name".localized)) {
+                    TextField("recipe_name".localized, text: $name)
                 }
                 
-                Section(header: Text("Ainesosat")) {
+                Section(header: Text("ingredients_title".localized)) {
                     ForEach(ingredients) { ingredient in
                         HStack {
                             Text(ingredient.name)
@@ -40,36 +41,38 @@ struct EditRecipeView: View {
                     .onDelete(perform: deleteIngredient)
                     
                     HStack {
-                        TextField("Nimi", text: $newIngredientName)
-                        TextField("Määrä", text: $newIngredientAmount)
+                        TextField("enter_ingredient_name".localized, text: $newIngredientName)
+                        TextField("enter_amount".localized, text: $newIngredientAmount)
                             .keyboardType(.decimalPad)
-                        Picker("Yksikkö", selection: $selectedUnit) {
+                        Picker("unit".localized, selection: $selectedUnit) {
                             ForEach(RecipeUnit.allCases, id: \.self) { unit in
                                 Text(unit.rawValue).tag(unit)
                             }
                         }
                     }
                     
-                    Button("Lisää ainesosa", action: addIngredient)
+                    Button("add_ingredient".localized) {
+                        addIngredient()
+                    }
                 }
                 
-                Section(header: Text("Ohjeet")) {
+                Section(header: Text("instructions_title".localized)) {
                     TextEditor(text: $instructions)
                         .frame(minHeight: 100)
                 }
             }
-            .navigationTitle("Muokkaa reseptiä")
+            .navigationTitle("edit_recipe".localized)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Peruuta") { dismiss() }
+                    Button("cancel".localized) { dismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Tallenna") { saveRecipe() }
+                    Button("save".localized) { saveRecipe() }
                 }
             }
-            .alert("Virhe", isPresented: $showingAlert) {
-                Button("OK", role: .cancel) { }
+            .alert("error".localized, isPresented: $showingAlert) {
+                Button("ok".localized, role: .cancel) { }
             } message: {
                 Text(alertMessage)
             }
@@ -81,28 +84,18 @@ struct EditRecipeView: View {
     }
     
     private func addIngredient() {
-        guard !newIngredientName.isEmpty else {
-            alertMessage = "Syötä ainesosan nimi"
-            showingAlert = true
-            return
-        }
-        
-        guard let amount = Double(newIngredientAmount.replacingOccurrences(of: ",", with: ".")) else {
-            alertMessage = "Syötä määrä numeroina"
-            showingAlert = true
-            return
-        }
+        guard let amount = Double(newIngredientAmount.replacingOccurrences(of: ",", with: ".")) else { return }
         
         let ingredient = RecipeIngredient(
             name: newIngredientName,
             amount: amount,
-            unit: selectedUnit.rawValue
+            unit: selectedUnit,
+            inventoryItem: inventoryItems.first { $0.name == newIngredientName }
         )
         
-        ingredients.append(ingredient)
+        recipe.ingredients.append(ingredient)
         newIngredientName = ""
         newIngredientAmount = ""
-        selectedUnit = .g
     }
     
     private func deleteIngredient(at offsets: IndexSet) {
@@ -111,13 +104,13 @@ struct EditRecipeView: View {
     
     private func saveRecipe() {
         guard !name.isEmpty else {
-            alertMessage = "Syötä reseptin nimi"
+            alertMessage = "enter_recipe_name".localized
             showingAlert = true
             return
         }
         
         guard !ingredients.isEmpty else {
-            alertMessage = "Lisää vähintään yksi ainesosa"
+            alertMessage = "add_at_least_one_ingredient".localized
             showingAlert = true
             return
         }

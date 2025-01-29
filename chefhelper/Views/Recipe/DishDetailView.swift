@@ -19,20 +19,20 @@ struct DishDetailView: View {
                 }
                 
                 // Dish details section
-                GroupBox(label: Label("Annoksen tiedot", systemImage: "list.bullet")) {
+                GroupBox(label: Label("dish_details".localized, systemImage: "list.bullet")) {
                     VStack(alignment: .leading, spacing: 15) {
                         Text(dish.name)
                             .font(.title2)
                             .bold()
                         
-                        Text("Komponentit:")
+                        Text("components_title".localized + ":")
                             .font(.headline)
                         ForEach(dish.components) { component in
                             VStack(alignment: .leading) {
                                 HStack {
                                     if let recipe = component.getRecipe(context: modelContext) {
-                                        Text("\(recipe.name) (resepti)")
-                                            .foregroundStyle(.blue)
+                                        Text("\(recipe.name) (\("recipe_reference".localized))")
+                                            .foregroundStyle(.brown)
                                     } else {
                                         Text(component.name)
                                     }
@@ -49,28 +49,27 @@ struct DishDetailView: View {
                             .padding(.vertical, 2)
                         }
                         
-                        if !dish.instructions.isEmpty {
-                            Text("Valmistusohje:")
-                                .font(.headline)
-                                .padding(.top)
-                            Text(dish.instructions)
-                                .padding(.leading)
-                        }
+                        Text("instructions_title".localized + ":")
+                            .font(.headline)
+                            .padding(.top)
+                        Text(dish.instructions)
+                            .padding(.leading)
                     }
                     .padding()
                 }
                 
-                // Delete button at bottom
+                // Delete button
                 Button(role: .destructive, action: { showingDeleteAlert = true }) {
                     HStack {
                         Image(systemName: "trash")
-                        Text("Poista annos")
+                        Text("delete_dish".localized)
                     }
-                    .font(.footnote)
-                    .foregroundColor(.gray)
-                    .padding(.vertical, 8)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.red.opacity(0.1))
+                    .foregroundColor(.red)
+                    .cornerRadius(10)
                 }
-                .padding(.horizontal)
             }
             .padding()
         }
@@ -78,7 +77,7 @@ struct DishDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             Button(action: { showingEditSheet = true }) {
-                Text("Muokkaa")
+                Text("edit".localized)
                     .foregroundColor(.brown)
             }
         }
@@ -86,16 +85,16 @@ struct DishDetailView: View {
             EditDishView(dish: dish)
         }
         .confirmationDialog(
-            "Haluatko varmasti poistaa annoksen?",
+            "delete_dish_confirmation".localized,
             isPresented: $showingDeleteAlert,
             titleVisibility: .visible
         ) {
-            Button("Poista", role: .destructive) {
+            Button("delete".localized, role: .destructive) {
                 deleteDish()
             }
-            Button("Peruuta", role: .cancel) { }
+            Button("cancel".localized, role: .cancel) { }
         } message: {
-            Text("Tätä toimintoa ei voi kumota")
+            Text("cannot_undo".localized)
         }
     }
     

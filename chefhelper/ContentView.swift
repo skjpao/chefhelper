@@ -15,6 +15,7 @@ extension ContentView {
 // Main view with tabs
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
+    @StateObject private var settingsManager = SettingsManager.shared
     @State private var isLoading = true
     
     var body: some View {
@@ -41,23 +42,25 @@ struct ContentView: View {
                 TabView {
                     RecipeListView()
                         .tabItem {
-                            Label("Reseptit", systemImage: "book")
+                            Label("recipes".localized, systemImage: "book")
                         }
                     
                     InventoryView()
                         .tabItem {
-                            Label("Varasto", systemImage: "cube.box")
+                            Label("inventory".localized, systemImage: "cube.box")
                         }
-                    
+
                     StaffView()
                         .tabItem {
-                            Label("Henkilöstö", systemImage: "person.2")
+                            Label("staff".localized, systemImage: "person.2")
                         }
                 }
+                .tint(.brown)
                 .opacity(isLoading ? 0 : 1)
                 .animation(.easeIn(duration: 0.5), value: isLoading)
             }
         }
+        .id(settingsManager.languageUpdateTrigger)
         .onAppear {
             // Ajastin splash screenille
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {

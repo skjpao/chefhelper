@@ -21,7 +21,7 @@ struct DayScheduleView: View {
                         Text(timeSlot.timeRange)
                             .font(.caption.bold())
                         ForEach(timeSlot.staffByRole.sorted(by: { $0.key < $1.key }), id: \.key) { role, count in
-                            Text("\(count) \(role)")
+                            Text("\(count) \(role.localized)")
                                 .font(.caption)
                                 .foregroundColor(.gray)
                         }

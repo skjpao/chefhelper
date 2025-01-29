@@ -14,4 +14,19 @@ class Dish {
         self.instructions = instructions
         self.imageData = imageData
     }
+    
+    // Inventory status messages
+    var inventoryStatus: (available: Bool, message: String) {
+        let componentStatuses = components.map { $0.inventoryStatus }
+        
+        if componentStatuses.isEmpty {
+            return (false, "no_components".localized)
+        }
+        
+        if componentStatuses.allSatisfy({ $0.available }) {
+            return (true, "all_components_available".localized)
+        } else {
+            return (false, "missing_components".localized)
+        }
+    }
 }

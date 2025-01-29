@@ -1,17 +1,26 @@
+import SwiftUI
 import Foundation
 
 // Varaston yksiköt
 enum InventoryUnit: String, Codable, CaseIterable {
     case kg = "kg"
     case l = "l"
-    case kpl = "kpl"
+    case kpl = "pcs"
+    
+    var localizedName: String {
+        return self.rawValue.localized
+    }
 }
 
 // Reseptien ja annosten yksiköt
 enum RecipeUnit: String, Codable, CaseIterable {
     case g = "g"
     case dl = "dl"
-    case kpl = "kpl"
+    case kpl = "pcs"
+    
+    var localizedName: String {
+        return self.rawValue.localized
+    }
 }
 
 // Yksikkömuunnokset
@@ -42,24 +51,3 @@ struct UnitConverter {
         }
     }
 }
-
-enum Category: String, Codable, CaseIterable {
-    case all = "Kaikki"
-    case fresh = "Tuoretuotteet"
-    case dry = "Kuiva-aineet"
-    case misc = "Muut"
-    
-    static var addCases: [Category] {
-        [.fresh, .dry, .misc]
-    }
-}
-
-enum Role: String, Codable, CaseIterable {
-    case cook = "Kokki"
-    case waiter = "Tarjoilija"
-    case dishwasher = "Tiskari"
-    case kitchenSupervisor = "Vuoropäällikkö (keittiö)"
-    case serviceSupervisor = "Vuoropäällikkö (sali)"
-    case headChef = "Keittiömestari"
-    case restaurantManager = "Ravintolapäällikkö"
-} 

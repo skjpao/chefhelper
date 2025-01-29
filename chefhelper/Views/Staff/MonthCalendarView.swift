@@ -31,7 +31,15 @@ struct MonthCalendarView: View {
                 
                 // Week day headers
                 HStack {
-                    ForEach(["Ma", "Ti", "Ke", "To", "Pe", "La", "Su"], id: \.self) { day in
+                    ForEach([
+                        "monday_short".localized,
+                        "tuesday_short".localized,
+                        "wednesday_short".localized,
+                        "thursday_short".localized,
+                        "friday_short".localized,
+                        "saturday_short".localized,
+                        "sunday_short".localized
+                    ], id: \.self) { day in
                         Text(day)
                             .frame(maxWidth: .infinity)
                             .font(.caption.bold())
@@ -59,11 +67,11 @@ struct MonthCalendarView: View {
                 }
                 .padding()
             }
-            .navigationTitle("Valitse viikko")
+            .navigationTitle("select_week".localized)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Sulje") {
+                    Button("close".localized) {
                         dismiss()
                     }
                 }
@@ -74,7 +82,7 @@ struct MonthCalendarView: View {
     private func monthYearString(from date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM yyyy"
-        formatter.locale = Locale(identifier: "fi_FI")
+        formatter.locale = Locale(identifier: SettingsManager.shared.selectedLanguage.rawValue)
         return formatter.string(from: date)
     }
     

@@ -10,7 +10,7 @@ class DishComponent {
     
     var inventoryStatus: (available: Bool, message: String) {
         guard let item = getInventoryItem() else {
-            return (false, "Ei linkitetty varastoon")
+            return (false, "not_linked_to_inventory".localized)
         }
         
         guard let convertedAmount = UnitConverter.convertToInventoryUnit(
@@ -18,13 +18,13 @@ class DishComponent {
             from: unit,
             to: item.unit
         ) else {
-            return (false, "Yksikkömuunnos ei mahdollinen")
+            return (false, "unit_conversion_impossible".localized)
         }
         
         if item.amount >= convertedAmount {
-            return (true, "Varastossa riittävästi")
+            return (true, "sufficient_stock".localized)
         } else {
-            return (false, "Varastossa ei riittävästi")
+            return (false, "insufficient_stock".localized)
         }
     }
     
