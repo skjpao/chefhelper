@@ -28,6 +28,7 @@
 "today" = "Idag";
 "tomorrow" = "Imorgon";
 "expired" = "Utgången";
+"select_date" = "Välj datum";
 
 // Kategorier
 "all" = "Alla";

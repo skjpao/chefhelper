@@ -42,10 +42,8 @@ ChefHelper is a comprehensive restaurant management application designed to help
 - Xcode 15.0 or later
 - Swift 5.9 or later
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## Acknowledgments
 
 - Icons provided by SF Symbols
+
+Copyright (c) 2025 Antti Valkonen

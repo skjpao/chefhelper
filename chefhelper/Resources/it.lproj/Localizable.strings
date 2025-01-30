@@ -28,6 +28,7 @@
 "today" = "Oggi";
 "tomorrow" = "Domani";
 "expired" = "Scaduto";
+"select_date" = "Seleziona data";
 
 // Categorie
 "all" = "Tutto";
