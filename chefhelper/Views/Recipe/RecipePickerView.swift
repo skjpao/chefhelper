@@ -3,11 +3,12 @@ import SwiftData
 
 struct RecipePickerView: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var modelContext
     @Query(sort: \Recipe.name) private var recipes: [Recipe]
     @Binding var components: [DishComponent]
+    @State private var selectedRecipe: Recipe?
     @State private var amount = ""
     @State private var selectedUnit: RecipeUnit = .g
-    @State private var selectedRecipe: Recipe?
     
     var body: some View {
         List {
@@ -40,8 +41,8 @@ struct RecipePickerView: View {
                 recipe: recipe
             )
             components.append(component)
+            dismiss()
         }
-        dismiss()
     }
 }
 

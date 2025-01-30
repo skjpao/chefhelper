@@ -124,7 +124,7 @@
 "image" = "Bild";
 "remove_image" = "Ta bort bild";
 "take_photo" = "Ta foto";
-
+"select_from_recipes" = "Välj från recept";
 // Applikation
 "app_name" = "ChefHelper";
 "loading" = "Laddar...";

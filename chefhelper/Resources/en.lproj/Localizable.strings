@@ -75,6 +75,7 @@
 "image" = "Image";
 "remove_image" = "Remove image";
 "take_photo" = "Take photo";
+"select_from_recipes" = "Select from recipes";
 
 // Application
 "app_name" = "ChefHelper";

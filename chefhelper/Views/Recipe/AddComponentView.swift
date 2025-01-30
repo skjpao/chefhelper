@@ -4,7 +4,6 @@ import SwiftData
 struct AddComponentView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
-    @Query(sort: \Recipe.name) private var recipes: [Recipe]
     @Binding var components: [DishComponent]
     let isEmbedded: Bool
     
@@ -12,25 +11,24 @@ struct AddComponentView: View {
     @State private var amount = ""
     @State private var selectedUnit: RecipeUnit = .g
     @State private var selectedRecipe: Recipe?
+    @State private var showingRecipePicker = false
     @State private var showingAlert = false
     @State private var alertMessage = ""
-    @State private var searchText = ""
     
     init(components: Binding<[DishComponent]>, isEmbedded: Bool = false) {
         self._components = components
         self.isEmbedded = isEmbedded
     }
     
-    var filteredRecipes: [Recipe] {
-        if searchText.isEmpty {
-            return recipes
-        }
-        return recipes.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
-    }
-    
     var body: some View {
-        let mainContent = Form {
-            Section(header: Text("component_details".localized)) {
+        Form {
+            Section {
+                // Komponentti suoraan tai reseptistä
+                Button("select_from_recipes".localized) {
+                    showingRecipePicker = true
+                }
+                
+                // Manuaalinen lisäys
                 TextField("component_name".localized, text: $name)
                 
                 HStack {
@@ -39,46 +37,18 @@ struct AddComponentView: View {
                     
                     Picker("unit".localized, selection: $selectedUnit) {
                         ForEach(RecipeUnit.allCases, id: \.self) { unit in
-                            Text(unit.rawValue).tag(unit)
+                            Text(unit.localizedName).tag(unit)
                         }
                     }
                     .pickerStyle(.segmented)
                 }
             }
-            
-            Section(header: Text("link_to_recipe".localized)) {
-                TextField("search_recipe".localized, text: $searchText)
-                
-                ForEach(filteredRecipes) { recipe in
-                    HStack {
-                        Text(recipe.name)
-                        Spacer()
-                        if selectedRecipe?.id == recipe.id {
-                            Image(systemName: "checkmark")
-                                .foregroundColor(.blue)
-                        }
-                    }
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        if selectedRecipe?.id == recipe.id {
-                            selectedRecipe = nil
-                            name = ""
-                        } else {
-                            selectedRecipe = recipe
-                            name = recipe.name
-                        }
-                    }
-                }
-            }
         }
         .navigationTitle("add_component".localized)
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                Button("cancel".localized) { dismiss() }
-            }
-            ToolbarItem(placement: .confirmationAction) {
-                Button("add".localized) { addComponent() }
+        .sheet(isPresented: $showingRecipePicker) {
+            NavigationStack {
+                RecipePickerView(components: $components)
             }
         }
         .alert("error".localized, isPresented: $showingAlert) {
@@ -86,14 +56,26 @@ struct AddComponentView: View {
         } message: {
             Text(alertMessage)
         }
-        
-        if isEmbedded {
-            mainContent
-        } else {
-            NavigationStack {
-                mainContent
+        HStack {
+            Button(action: { dismiss() }) {
+                Text("cancel".localized)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.brown.opacity(0.1))
+                    .foregroundColor(.brown)
+                    .cornerRadius(8)
+            }
+            Button(action: addComponent) {
+                Text("save".localized)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.brown)
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
             }
         }
+        .padding()
+        
     }
     
     private func addComponent() {
@@ -112,8 +94,7 @@ struct AddComponentView: View {
         let component = DishComponent(
             name: name,
             amount: amountValue,
-            unit: selectedUnit,
-            recipe: selectedRecipe
+            unit: selectedUnit
         )
         
         components.append(component)

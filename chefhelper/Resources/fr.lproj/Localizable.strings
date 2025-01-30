@@ -124,6 +124,7 @@
 "image" = "Image";
 "remove_image" = "Supprimer l'image";
 "take_photo" = "Prendre une photo";
+"select_from_recipes" = "Sélectionner depuis les recettes";
 
 // Application
 "app_name" = "ChefHelper";

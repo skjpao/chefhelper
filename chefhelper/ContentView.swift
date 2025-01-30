@@ -11,7 +11,6 @@ extension ContentView {
 #endif
 
 
-
 // Main view with tabs
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext

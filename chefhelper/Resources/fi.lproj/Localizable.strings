@@ -59,6 +59,7 @@
 "no_ingredients" = "Ei ainesosia";
 "ingredient_not_in_inventory" = "Ainesosaa ei löydy varastosta";
 
+
 // Annokset
 "dish_details" = "Annoksen tiedot";
 "components_title" = "Komponentit";
@@ -77,6 +78,7 @@
 "remove_image" = "Poista kuva";
 "take_photo" = "Ota kuva";
 "enter_dish_name" = "Syötä annoksen nimi";
+"select_from_recipes" = "Valitse reseptistä";
 
 // Henkilöstö
 "shift_details" = "Työvuoron tiedot";
