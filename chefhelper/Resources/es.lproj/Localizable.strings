@@ -148,6 +148,7 @@
 "item_details" = "Detalles del artículo";
 "item_name" = "Nombre del artículo";
 "price" = "Precio";
+"price_per_unit" = "Precio por unidad"; 
 "expiry_date" = "Fecha de caducidad";
 "new_item" = "Nuevo artículo";
 "enter_item_name" = "Introducir nombre del artículo";
@@ -255,4 +256,4 @@
 "camera_permission_error" = "No se pudo verificar el permiso de la cámara";
 
 // Búsqueda
-"search" = "Buscar..."; 
+"search" = "Buscar...";

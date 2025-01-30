@@ -86,7 +86,7 @@
 "delete_staff_confirmation" = "Är du säker på att du vill radera denna personal?";
 "cannot_undo" = "Denna åtgärd kan inte ångras";
 
-// Reseptit
+// Recept
 "no_recipes" = "Inga recept";
 "no_dishes" = "Inga rätter";
 "ingredients" = "ingredienser";
@@ -148,6 +148,7 @@
 "item_details" = "Artikeldetaljer";
 "item_name" = "Artikelnamn";
 "price" = "Pris";
+"price_per_unit" = "Pris per enhet"; 
 "expiry_date" = "Utgångsdatum";
 "new_item" = "Ny artikel";
 "enter_item_name" = "Ange artikelnamn";
@@ -255,4 +256,6 @@
 "camera_permission_error" = "Kunde inte kontrollera kameratillstånd";
 
 // Sök
-"search" = "Sök..."; 
+"search" = "Sök...";
+
+

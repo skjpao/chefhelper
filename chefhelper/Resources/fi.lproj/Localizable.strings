@@ -124,6 +124,7 @@
 "item_details" = "Tuotteen tiedot";
 "item_name" = "Tuotteen nimi";
 "price" = "Hinta";
+"price_per_unit" = "Hinta per yksikkö"; 
 "expiry_date" = "Viimeinen käyttöpäivä";
 "category" = "Kategoria";
 "new_item" = "Uusi tuote";
@@ -264,4 +265,7 @@
 // New additions from the code block
 "enter_staff_name" = "Syötä työntekijän nimi";
 "enter_phone_number" = "Syötä puhelinnumero";
-"invalid_phone_number" = "Syötä kelvollinen puhelinnumero (5-15 numeroa)"; 
+"invalid_phone_number" = "Syötä kelvollinen puhelinnumero (5-15 numeroa)";
+
+// Lisää nämä kategorioiden alle
+

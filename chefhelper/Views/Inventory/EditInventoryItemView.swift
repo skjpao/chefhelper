@@ -82,7 +82,7 @@ struct EditInventoryItemView: View {
                 }
                 
                 HStack {
-                    Text("price".localized)
+                    Text("price_per_unit".localized)
                         .foregroundColor(.brown)
                     Spacer()
                     TextField("enter_price".localized, text: $pricePerUnit)

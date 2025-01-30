@@ -148,6 +148,7 @@
 "item_details" = "Dettagli articolo";
 "item_name" = "Nome articolo";
 "price" = "Prezzo";
+"price_per_unit" = "Prezzo per unità"; 
 "expiry_date" = "Data di scadenza";
 "new_item" = "Nuovo articolo";
 "enter_item_name" = "Inserisci nome articolo";
@@ -255,4 +256,4 @@
 "camera_permission_error" = "Impossibile verificare il permesso della fotocamera";
 
 // Ricerca
-"search" = "Cerca..."; 
+"search" = "Cerca...";

@@ -25,68 +25,7 @@ struct AddRecipeView: View {
                 }
                 
                 Section(header: Text("ingredients_title".localized)) {
-                    VStack(spacing: 12) {
-                        TextField("enter_ingredient_name".localized, text: $newIngredientName)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .onChange(of: newIngredientName) { _, newValue in
-                                showingSuggestions = !newValue.isEmpty
-                            }
-                        
-                        if showingSuggestions {
-                            ScrollView(.horizontal, showsIndicators: false) {
-                                HStack {
-                                    ForEach(inventoryItems.filter {
-                                        $0.name.lowercased().contains(newIngredientName.lowercased())
-                                    }) { item in
-                                        Button(action: {
-                                            selectInventoryItem(item)
-                                        }) {
-                                            VStack(alignment: .leading) {
-                                                Text(item.name)
-                                                    .foregroundColor(.brown)
-                                                Text(item.category.localizedName)
-                                                    .font(.caption)
-                                                    .foregroundColor(.gray)
-                                            }
-                                            .padding(.horizontal, 10)
-                                            .padding(.vertical, 5)
-                                            .background(Color.brown.opacity(0.1))
-                                            .cornerRadius(8)
-                                        }
-                                    }
-                                }
-                                .padding(.vertical, 5)
-                            }
-                        }
-                        
-                        HStack(spacing: 12) {
-                            TextField("amount".localized, text: $newIngredientAmount)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                                .keyboardType(.decimalPad)
-                                .frame(maxWidth: .infinity)
-                            
-                            Picker("", selection: $selectedUnit) {
-                                ForEach(RecipeUnit.allCases, id: \.self) { unit in
-                                    Text(unit.localizedName).tag(unit)
-                                }
-                            }
-                            .frame(maxWidth: 100)
-                            .clipped()
-                        }
-                        
-                        Button(action: addIngredient) {
-                            HStack {
-                                Image(systemName: "plus.circle.fill")
-                                Text("add_ingredient".localized)
-                            }
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 8)
-                            .background(Color.brown.opacity(0.1))
-                            .foregroundColor(.brown)
-                            .cornerRadius(8)
-                        }
-                    }
-                    .padding(.vertical, 8)
+                    ingredientForm
                     
                     if !ingredients.isEmpty {
                         Divider()
@@ -142,6 +81,40 @@ struct AddRecipeView: View {
         } message: {
             Text(alertMessage)
         }
+    }
+    
+    private var ingredientForm: some View {
+        VStack(spacing: 16) {
+            // Ainesosan nimi
+            TextField("enter_ingredient_name".localized, text: $newIngredientName)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+            
+            HStack {
+                // Määrä
+                TextField("amount".localized, text: $newIngredientAmount)
+                    .keyboardType(.decimalPad)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                
+                // Yksikkö
+                Picker("", selection: $selectedUnit) {
+                    ForEach(RecipeUnit.allCases, id: \.self) { unit in
+                        Text(unit.localizedName).tag(unit)
+                    }
+                }
+                .pickerStyle(.menu)
+            }
+            
+            Button(action: addIngredient) {
+                Text("add_ingredient".localized)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.brown)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+            }
+            .disabled(newIngredientName.isEmpty || newIngredientAmount.isEmpty)
+        }
+        .padding()
     }
     
     private func addIngredient() {

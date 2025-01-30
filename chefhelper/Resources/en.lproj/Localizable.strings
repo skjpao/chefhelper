@@ -97,6 +97,7 @@
 "item_details" = "Item Details";
 "item_name" = "Item Name";
 "price" = "Price";
+"price_per_unit" = "Price per unit";
 "expiry_date" = "Expiry Date";
 "category" = "Category";
 "new_item" = "New Item";
