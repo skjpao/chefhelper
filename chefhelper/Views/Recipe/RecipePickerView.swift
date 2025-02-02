@@ -9,6 +9,8 @@ struct RecipePickerView: View {
     @State private var selectedRecipe: Recipe?
     @State private var amount = ""
     @State private var selectedUnit: RecipeUnit = .g
+    @State private var showingAlert = false
+    @State private var alertMessage = ""
     
     var body: some View {
         List {
@@ -29,20 +31,32 @@ struct RecipePickerView: View {
                 }
             }
         }
+        .alert("error".localized, isPresented: $showingAlert) {
+            Button("ok".localized, role: .cancel) { }
+        } message: {
+            Text(alertMessage)
+        }
     }
     
     private func addComponent() {
-        if let recipe = selectedRecipe,
-           let amountValue = Double(amount.replacingOccurrences(of: ",", with: ".")) {
-            let component = DishComponent(
-                name: recipe.name,
-                amount: amountValue,
-                unit: selectedUnit,
-                recipe: recipe
-            )
-            components.append(component)
-            dismiss()
+        guard let recipe = selectedRecipe else { return }
+        
+        // Tarkistetaan että määrä on kelvollinen numero
+        guard let amountValue = Double(amount.replacingOccurrences(of: ",", with: ".")) else {
+            alertMessage = "enter_amount".localized
+            showingAlert = true
+            return
         }
+        
+        let component = DishComponent(
+            name: recipe.name,
+            amount: amountValue,
+            unit: selectedUnit,
+            recipe: recipe
+        )
+        
+        components.append(component)
+        dismiss() // Suljetaan näkymä heti komponentin lisäämisen jälkeen
     }
 }
 

@@ -6,6 +6,7 @@ struct AddComponentView: View {
     @Environment(\.modelContext) private var modelContext
     @Binding var components: [DishComponent]
     let isEmbedded: Bool
+    let dismissAfterAdd: Bool
     
     @State private var name = ""
     @State private var amount = ""
@@ -15,9 +16,10 @@ struct AddComponentView: View {
     @State private var showingAlert = false
     @State private var alertMessage = ""
     
-    init(components: Binding<[DishComponent]>, isEmbedded: Bool = false) {
+    init(components: Binding<[DishComponent]>, isEmbedded: Bool = false, dismissAfterAdd: Bool = false) {
         self._components = components
         self.isEmbedded = isEmbedded
+        self.dismissAfterAdd = dismissAfterAdd
     }
     
     var body: some View {
@@ -98,6 +100,13 @@ struct AddComponentView: View {
         )
         
         components.append(component)
-        dismiss()
+        
+        if dismissAfterAdd {
+            dismiss()
+        } else {
+            // Tyhjennä kentät uutta komponenttia varten
+            name = ""
+            amount = ""
+        }
     }
 } 

@@ -24,7 +24,6 @@ struct EditRecipeView: View {
     }
     
     var body: some View {
-        NavigationView {
             Form {
                 Section(header: Text("recipe_name".localized)) {
                     TextField("recipe_name".localized, text: $name)
@@ -63,21 +62,33 @@ struct EditRecipeView: View {
             }
             .navigationTitle("edit_recipe".localized)
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("cancel".localized) { dismiss() }
-                }
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("save".localized) { saveRecipe() }
-                }
-            }
             .alert("error".localized, isPresented: $showingAlert) {
                 Button("ok".localized, role: .cancel) { }
             } message: {
                 Text(alertMessage)
             }
+
+                        // Tallenna/Peruuta napit
+            HStack {
+                Button(action: { dismiss() }) {
+                    Text("cancel".localized)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.brown.opacity(0.1))
+                        .foregroundColor(.brown)
+                        .cornerRadius(8)
+                }
+                Button(action: saveRecipe) {
+                    Text("save".localized)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.brown)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+            }
+            .padding()
         }
-    }
     
     private func formatAmount(_ amount: Double) -> String {
         return String(format: "%.1f", amount)

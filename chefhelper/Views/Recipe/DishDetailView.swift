@@ -33,15 +33,19 @@ struct DishDetailView: View {
                 }
             }
         }
-        .navigationTitle(dish.name)
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button("edit".localized) {
-                    showingEditSheet = true
-                }
+        HStack {
+            Button(action: { showingEditSheet = true }) {
+                Text("edit".localized)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.brown)
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
             }
         }
+        .padding()
+        .navigationTitle(dish.name)
+        .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showingEditSheet) {
             NavigationStack {
                 EditDishView(dish: dish)

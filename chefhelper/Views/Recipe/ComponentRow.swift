@@ -6,29 +6,27 @@ struct ComponentRow: View {
     let modelContext: ModelContext
     
     var body: some View {
-        VStack(alignment: .leading) {
-            HStack {
-                if let recipe = component.recipe {
-                    Text("\(recipe.name) (\("recipe_reference".localized))")
-                        .foregroundStyle(.brown)
-                } else {
-                    Text(component.name)
-                }
-                Spacer()
-                Text("\(formatAmount(component.amount)) \(component.unit.rawValue)")
-                    .foregroundColor(.gray)
+        HStack {
+            if let recipe = component.recipe {
+                Text("\(recipe.name) (\("recipe_reference".localized))")
+                    .foregroundStyle(.brown)
+            } else {
+                Text(component.name)
             }
-            
-            // Poistetaan statuksen näyttäminen toistaiseksi
-            // if !component.inventoryStatus.message.isEmpty {
-            //     Text(component.inventoryStatus.message)
-            //         .font(.caption)
-            //         .foregroundColor(component.inventoryStatus.available ? .green : .red)
-            // }
+            Spacer()
+            Text("\(formatAmount(component.amount)) \(component.unit.rawValue)")
+                .foregroundColor(.gray)
         }
     }
     
     private func formatAmount(_ amount: Double) -> String {
         return String(format: "%.1f", amount)
+    }
+    
+    private func deleteComponent() {
+        if let recipe = component.recipe {
+            component.recipe = nil
+        }
+        modelContext.delete(component)
     }
 } 

@@ -6,102 +6,87 @@ struct RecipeDetailView: View {
     @Environment(\.modelContext) private var modelContext
     @Bindable var recipe: Recipe
     
-    @State private var newComment = ""
-    @State private var scalingFactor = "1.0"
     @State private var showingDeleteAlert = false
+    @State private var showingEditSheet = false
+    @State private var newComment = ""
     
     var body: some View {
-        ScrollView {
-            VStack(spacing: 20) {
-                // Recipe details section
-                GroupBox(label: Label("recipe_details".localized, systemImage: "list.bullet")) {
-                    VStack(alignment: .leading, spacing: 15) {
-                        Text(recipe.name)
-                            .font(.title2)
-                            .bold()
-                        
-                        Text("ingredients_title".localized + ":")
-                            .font(.headline)
-                        Section(header: Text("ingredients_title".localized)) {
-                            let ingredients = recipe.ingredients
-                            ForEach(ingredients) { ingredient in
-                                HStack {
-                                    Text(ingredient.name)
-                                    Spacer()
-                                    Text("\(formatAmount(ingredient.amount)) \(ingredient.unit)")
-                                        .foregroundColor(.gray)
-                                }
-                            }
-                        }
-                        
-                        Text("instructions_title".localized + ":")
-                            .font(.headline)
-                        Text(recipe.instructions)
-                            .padding(.leading)
+        VStack(spacing: 0) {
+            Form {
+                Section(header: Text("recipe_details".localized)) {
+                    Text(recipe.name)
+                        .font(.headline)
+                    
+                    if recipe.portionSize > 1 {
+                        Text("\(recipe.portionSize) \("portions".localized)")
+                            .foregroundColor(.gray)
                     }
-                    .padding()
                 }
                 
-                // Scaling section
-                GroupBox(label: Label("scaling".localized, systemImage: "arrow.up.right.and.arrow.down.left.rectangle")) {
-                    VStack(alignment: .leading, spacing: 10) {
-                        TextField("scaling_factor".localized, text: $scalingFactor)
-                            .keyboardType(.decimalPad)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                        
-                        if let factor = Double(scalingFactor), factor > 0 {
-                            let scaledIngredients = recipe.ingredients
-                            ForEach(scaledIngredients) { ingredient in
-                                Text("• \(ingredient.name): \(String(format: "%.1f", ingredient.amount * factor))\(ingredient.unit)")
-                            }
-                            .padding(.leading)
-                        }
-                    }
-                    .padding()
-                }
-                
-                // Comments section
-                GroupBox(label: Label("comments".localized, systemImage: "text.bubble")) {
-                    VStack(alignment: .leading, spacing: 10) {
-                        ForEach(Array(recipe.comments.enumerated()), id: \.element) { index, comment in
+                Section(header: Text("ingredients_title".localized)) {
+                    if recipe.ingredients.isEmpty {
+                        Text("no_ingredients".localized)
+                            .foregroundColor(.gray)
+                    } else {
+                        ForEach(recipe.ingredients) { ingredient in
                             HStack {
-                                Text("• \(comment)")
+                                Text(ingredient.name)
                                 Spacer()
-                                Button(action: { deleteComment(at: index) }) {
-                                    Image(systemName: "trash.circle.fill")
-                                        .foregroundColor(.red)
-                                }
-                            }
-                        }
-                        
-                        HStack {
-                            TextField("add_comment".localized, text: $newComment)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                            Button(action: addComment) {
-                                Image(systemName: "plus.circle.fill")
-                                    .foregroundColor(.brown)
+                                Text("\(formatAmount(ingredient.amount)) \(ingredient.unit.rawValue)")
+                                    .foregroundColor(.gray)
                             }
                         }
                     }
-                    .padding()
                 }
                 
-                // Delete button
-                Button(role: .destructive, action: { showingDeleteAlert = true }) {
-                    HStack {
-                        Image(systemName: "trash")
-                        Text("delete_recipe".localized)
+                if !recipe.instructions.isEmpty {
+                    Section(header: Text("instructions_title".localized)) {
+                        Text(recipe.instructions)
                     }
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.red.opacity(0.1))
-                    .foregroundColor(.red)
-                    .cornerRadius(10)
+                }
+                
+                Section(header: Text("comments".localized)) {
+                    ForEach(recipe.comments, id: \.self) { comment in
+                        HStack {
+                            Text(comment)
+                            Spacer()
+                            Button(action: { deleteComment(comment) }) {
+                                Image(systemName: "trash.circle.fill")
+                                    .foregroundColor(.red)
+                            }
+                        }
+                    }
+                    
+                    HStack {
+                        TextField("add_comment".localized, text: $newComment)
+                        Button(action: addComment) {
+                            Image(systemName: "plus.circle.fill")
+                                .foregroundColor(.brown)
+                        }
+                    }
+                }
+            }
+            
+            // Napit alalaidassa
+            HStack {
+                Button(action: { showingEditSheet = true }) {
+                    Text("edit".localized)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.brown)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
                 }
             }
             .padding()
         }
         .navigationTitle(recipe.name)
+        .navigationBarTitleDisplayMode(.inline)
+        .sheet(isPresented: $showingEditSheet) {
+            NavigationStack {
+                EditRecipeView(recipe: recipe)
+            }
+        }
         .confirmationDialog(
             "delete_recipe_confirmation".localized,
             isPresented: $showingDeleteAlert,
@@ -122,8 +107,10 @@ struct RecipeDetailView: View {
         newComment = ""
     }
     
-    private func deleteComment(at index: Int) {
-        recipe.comments.remove(at: index)
+    private func deleteComment(_ comment: String) {
+        if let index = recipe.comments.firstIndex(of: comment) {
+            recipe.comments.remove(at: index)
+        }
     }
     
     private func deleteRecipe() {

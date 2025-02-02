@@ -25,6 +25,7 @@ struct AddDishView: View {
                         ComponentRow(component: component, modelContext: modelContext)
                     }
                     .onDelete(perform: deleteComponents)
+                    .onMove(perform: moveComponents)
                     
                     Button("add_component".localized) {
                         showingAddComponent = true
@@ -37,7 +38,7 @@ struct AddDishView: View {
                 }
             }
             
-        // Tallenna/Peruuta napit
+            // Tallenna/Peruuta napit
             HStack {
                 Button(action: { dismiss() }) {
                     Text("cancel".localized)
@@ -62,7 +63,7 @@ struct AddDishView: View {
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showingAddComponent) {
             NavigationStack {
-                AddComponentView(components: $components, isEmbedded: true)
+                AddComponentView(components: $components, isEmbedded: true, dismissAfterAdd: true)
             }
         }
         .sheet(isPresented: $showingRecipePicker) {
@@ -83,6 +84,10 @@ struct AddDishView: View {
     
     private func deleteComponents(at offsets: IndexSet) {
         components.remove(atOffsets: offsets)
+    }
+    
+    private func moveComponents(from source: IndexSet, to destination: Int) {
+        components.move(fromOffsets: source, toOffset: destination)
     }
     
     private func saveDish() {
