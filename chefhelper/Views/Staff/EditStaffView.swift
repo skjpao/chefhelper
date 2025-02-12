@@ -16,6 +16,7 @@ struct EditStaffView: View {
     @State private var selectedColor: String
     @State private var showingShiftEditor = false
     @State private var selectedShiftTab = 0
+    @State private var selectedShift: WorkShift?
     
     init(staff: Staff) {
         self.staff = staff
@@ -74,26 +75,19 @@ struct EditStaffView: View {
                                     .foregroundColor(.gray)
                             } else {
                                 ForEach(shifts) { shift in
-                                    HStack {
-                                        VStack(alignment: .leading) {
-                                            Text(formatDate(shift.date))
-                                                .font(.headline)
-                                            Text("\(formatTime(shift.startTime)) - \(formatTime(shift.endTime))")
-                                                .font(.subheadline)
-                                                .foregroundColor(.gray)
+                                    ShiftRowView(shift: shift)
+                                        .contentShape(Rectangle())
+                                        .onTapGesture {
+                                            selectedShift = shift
+                                            showingShiftEditor = true
                                         }
-                                        Spacer()
-                                        Text(shift.position.localized)
-                                            .font(.caption)
-                                            .padding(4)
-                                            .background(Color.brown.opacity(0.1))
-                                            .cornerRadius(4)
-                                    }
                                 }
                                 .onDelete { indexSet in
                                     let shiftsToDelete = indexSet.map { shifts[$0] }
-                                    staff.schedule.removeAll { shift in
-                                        shiftsToDelete.contains { $0.id == shift.id }
+                                    for shift in shiftsToDelete {
+                                        if let index = staff.schedule.firstIndex(where: { $0.id == shift.id }) {
+                                            staff.schedule.remove(at: index)
+                                        }
                                     }
                                 }
                             }
@@ -102,10 +96,22 @@ struct EditStaffView: View {
                         
                         // Add shift button (only in upcoming tab)
                         if selectedShiftTab == 0 {
-                            Button(action: { showingShiftEditor = true }) {
+                            Button(action: { 
+                                selectedShift = nil  // Nollaa valittu vuoro
+                                showingShiftEditor = true 
+                            }) {
                                 Label("add_shift".localized, systemImage: "plus")
                                     .foregroundColor(.brown)
                                     .padding()
+                            }
+                        }
+                    }
+                    .sheet(isPresented: $showingShiftEditor) {
+                        NavigationStack {
+                            if let shift = selectedShift {
+                                EditShiftView(staff: staff, shift: shift)
+                            } else {
+                                AddShiftView(staff: staff)
                             }
                         }
                     }
@@ -160,9 +166,6 @@ struct EditStaffView: View {
                         }
                     }
                 }
-            }
-            .sheet(isPresented: $showingShiftEditor) {
-                AddShiftView(staff: staff)
             }
             .alert("error".localized, isPresented: $showingValidationAlert) {
                 Button("ok".localized, role: .cancel) { }
@@ -227,6 +230,28 @@ struct EditStaffView: View {
     private func deleteStaff() {
         modelContext.delete(staff)
         dismiss()
+    }
+}
+
+struct ShiftRowView: View {
+    let shift: WorkShift
+    
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading) {
+                Text(formatDate(shift.date))
+                    .font(.headline)
+                Text("\(formatTime(shift.startTime)) - \(formatTime(shift.endTime))")
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
+            }
+            
+            Spacer()
+            
+            Image(systemName: "chevron.right")
+                .foregroundColor(.gray)
+        }
+        .padding(.vertical, 4)
     }
 }
 

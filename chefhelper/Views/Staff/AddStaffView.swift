@@ -39,27 +39,38 @@ struct AddStaffView: View {
                         }
                     }
                 }
+
+
+
             }
             .navigationTitle("add_staff".localized)
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("cancel".localized) {
-                        dismiss()
-                    }
-                }
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("add".localized) {
-                        validateAndSave()
-                    }
-                }
+        }
+        HStack {
+            Button(action: { dismiss() }) {
+                Text("cancel".localized)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.brown.opacity(0.1))
+                    .foregroundColor(.brown)
+                    .cornerRadius(8)
             }
-            .alert("error".localized, isPresented: $showingValidationAlert) {
+            Button(action: validateAndSave) {
+                Text("save".localized)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.brown)
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
+            }
+        }
+        .padding()
+
+        .alert("error".localized, isPresented: $showingValidationAlert) {
                 Button("ok".localized, role: .cancel) { }
             } message: {
                 Text(validationMessage)
             }
-        }
     }
     
     private func isValidPhoneNumber(_ number: String) -> Bool {

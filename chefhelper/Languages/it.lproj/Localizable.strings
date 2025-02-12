@@ -9,6 +9,12 @@
 "error" = "Errore";
 "ok" = "OK";
 "unit" = "Unità";
+"date" = "Data";
+"starts" = "Inizio";
+"ends" = "Fine";
+"shift_details" = "Dettagli turno";
+"edit_shift" = "Modifica turno";
+"delete_shift" = "Elimina turno";
 
 // Navigazione
 "recipes" = "Ricette";

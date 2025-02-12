@@ -9,6 +9,12 @@
 "error" = "Virhe";
 "ok" = "OK";
 "unit" = "Yksikkö";
+"date" = "Päivä";
+"starts" = "Alkaa";
+"ends" = "Päättyy";
+"shift_details" = "Vuoron tiedot";
+"edit_shift" = "Muokkaa vuoroa";
+"delete_shift" = "Poista vuoro";
 
 // Navigaatio
 "recipes" = "Reseptit";

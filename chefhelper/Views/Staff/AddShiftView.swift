@@ -5,7 +5,7 @@ struct AddShiftView: View {
     @Environment(\.dismiss) private var dismiss
     @Bindable var staff: Staff
     
-    @State private var date = Date()
+    @State private var date = Calendar.current.date(byAdding: .day, value: 1, to: Date()) ?? Date()
     @State private var startHour = 8 // Default start hour
     @State private var startMinute = 0 // Default start minute
     @State private var endHour = 16 // Default end hour
@@ -62,19 +62,26 @@ struct AddShiftView: View {
             }
             .navigationTitle("add_shift".localized)
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("cancel".localized) {
-                        dismiss()
-                    }
-                }
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("add".localized) {
-                        addShift()
-                    }
-                }
+        }
+        HStack {
+            Button(action: { dismiss() }) {
+                Text("cancel".localized)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.brown.opacity(0.1))
+                    .foregroundColor(.brown)
+                    .cornerRadius(8)
+            }
+            Button(action: addShift) {
+                Text("add".localized)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.brown)
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
             }
         }
+        .padding()
         .alert(alertMessage, isPresented: $showingAlert) {
             Button("ok".localized, role: .cancel) { }
         }

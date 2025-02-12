@@ -9,6 +9,12 @@
 "error" = "Error";
 "ok" = "OK";
 "unit" = "Unit";
+"date" = "Date";
+"starts" = "Starts";
+"ends" = "Ends";
+"shift_details" = "Shift Details"; 
+"edit_shift" = "Edit Shift";
+"delete_shift" = "Delete Shift";
 
 // Navigation
 "recipes" = "Recipes";

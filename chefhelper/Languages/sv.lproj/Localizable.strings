@@ -9,6 +9,12 @@
 "error" = "Fel";
 "ok" = "OK";
 "unit" = "Enhet";
+"date" = "Datum";
+"starts" = "Börjar";
+"ends" = "Slutar";
+"shift_details" = "Skiftdetaljer";
+"edit_shift" = "Redigera skift";
+"delete_shift" = "Radera skift";
 
 // Navigation
 "recipes" = "Recept";

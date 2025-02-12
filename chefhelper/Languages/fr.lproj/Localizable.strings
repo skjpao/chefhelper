@@ -9,6 +9,12 @@
 "error" = "Erreur";
 "ok" = "OK";
 "unit" = "Unité";
+"date" = "Date";
+"starts" = "Début";
+"ends" = "Fin";
+"shift_details" = "Détails du service";
+"edit_shift" = "Modifier le service";
+"delete_shift" = "Supprimer le service";
 
 // Navigation
 "recipes" = "Recettes";
